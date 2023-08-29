@@ -4,6 +4,7 @@ import { localStorageKeys } from "../config/localStorageKeys";
 interface AuthContextValue {
   signedIn: boolean;
   signin: (accessToken: string) => void;
+  signout: () => void;
 }
 
 interface AuthProviderProps {
@@ -26,8 +27,13 @@ export function AuthProvider({ children }: AuthProviderProps) {
     setSignedIn(true);
   }, []);
 
+  const signout = useCallback(() => {
+    localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
+    setSignedIn(false);
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ signedIn, signin: signin }}>
+    <AuthContext.Provider value={{ signedIn, signin, signout }}>
       {children}
     </AuthContext.Provider>
   );
