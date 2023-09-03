@@ -1,11 +1,11 @@
 import { useQuery } from "react-query";
-import { fetchListClients } from "../../../api/clients/get";
+import { ClientParams, fetchListClients } from "../../../api/clients/get";
 
-export function useFetchListClients() {
-  const { data, isFetching } = useQuery({
+export function useFetchListClients(clientParams: ClientParams) {
+  const { data, isFetching, refetch } = useQuery({
     queryKey: ["clients"],
-    queryFn: fetchListClients,
+    queryFn: () => fetchListClients({ params: clientParams }),
   });
 
-  return { clients: data ?? [], isFetching };
+  return { clients: data, isFetching, refetch };
 }

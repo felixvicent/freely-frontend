@@ -1,6 +1,7 @@
 import { Address } from "./Address";
 
 export type Client = {
+  id: string;
   firstName: string;
   lastName: string;
   email: string;

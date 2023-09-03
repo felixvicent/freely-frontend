@@ -1,17 +1,26 @@
 import { Button, Col, Form, Input, Row } from "antd";
 import { CustomInput } from "../../CustomInput";
 import { Select } from "../../Select";
-import { useClientForm } from "./useClientForm";
+import { ClientFormType, useClientForm } from "./useClientForm";
 
-interface ClientFormProps {
+export interface ClientFormProps {
   onCancel?: () => void;
+  initialValues?: ClientFormType;
 }
 
-export function ClientForm({ onCancel }: ClientFormProps) {
-  const { handleSubmit, isLoading } = useClientForm(onCancel);
+export function ClientForm({ onCancel, initialValues }: ClientFormProps) {
+  const { handleSubmit, isLoading } = useClientForm(
+    onCancel,
+    initialValues?.id
+  );
 
   return (
-    <Form layout="vertical" onFinish={handleSubmit} preserve={false}>
+    <Form
+      layout="vertical"
+      onFinish={handleSubmit}
+      preserve={false}
+      initialValues={initialValues}
+    >
       <Form.Item
         label="Nome"
         name="firstName"

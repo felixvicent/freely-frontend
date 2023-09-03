@@ -3,8 +3,10 @@ import { FetchCreateClientPayload } from "../../../../app/api/clients/post";
 import { apiException } from "../../../../app/services/httpClient";
 import { useFetchCreateClient } from "../../../../app/hooks/api/clients/useFetchCreateClient";
 import { useQueryClient } from "react-query";
+import { useFetchUpdateClient } from "../../../../app/hooks/api/clients/useFetchUpdateClient";
 
-interface ClientFormType {
+export interface ClientFormType {
+  id: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -17,30 +19,42 @@ interface ClientFormType {
   state: string;
 }
 
-export function useClientForm(onFinish?: () => void) {
-  const { mutateAsync: createClient, isLoading } = useFetchCreateClient();
+export function useClientForm(onFinish?: () => void, clientId?: string) {
+  const { mutateAsync: createClient, isLoading: isCreateClientLoading } =
+    useFetchCreateClient();
+  const { mutateAsync: updateClient, isLoading: isUpdateClientLoading } =
+    useFetchUpdateClient();
 
   const queryClient = useQueryClient();
 
   async function handleSubmit(formData: ClientFormType) {
-    const payload: FetchCreateClientPayload = {
-      body: {
-        firstName: formData.firstName,
-        lastName: formData.lastName,
-        email: formData.email,
-        document: formData.document,
-        telephone: formData.telephone,
-        address: {
-          street: formData.street,
-          number: formData.number,
-          city: formData.city,
-          state: formData.state,
-          zipCode: formData.zipCode,
-        },
+    const payload: FetchCreateClientPayload["body"] = {
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      document: formData.document,
+      telephone: formData.telephone,
+      address: {
+        street: formData.street,
+        number: formData.number,
+        city: formData.city,
+        state: formData.state,
+        zipCode: formData.zipCode,
       },
     };
     try {
-      await createClient(payload);
+      if (clientId) {
+        await updateClient({
+          body: payload,
+          path: {
+            id: clientId,
+          },
+        });
+      } else {
+        await createClient({
+          body: payload,
+        });
+      }
 
       queryClient.invalidateQueries({ queryKey: ["clients"] });
 
@@ -53,5 +67,8 @@ export function useClientForm(onFinish?: () => void) {
     }
   }
 
-  return { handleSubmit, isLoading };
+  return {
+    handleSubmit,
+    isLoading: isCreateClientLoading || isUpdateClientLoading,
+  };
 }
