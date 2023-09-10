@@ -1,7 +1,7 @@
 import { Button } from "antd";
-import { ClientsTable } from "../../components/Table/ClientsTable";
 import { useClients } from "./useClients";
 import { Modal } from "../../components/Modal";
+import { Table } from "../../components/Table";
 
 export function Clients() {
   const {
@@ -19,7 +19,7 @@ export function Clients() {
         </Button>
       </div>
 
-      <ClientsTable />
+      <Table.Clients />
       <Modal.ClientForm
         isOpen={isAddClientModalOpen}
         onClose={handleCloseAddClientModal}

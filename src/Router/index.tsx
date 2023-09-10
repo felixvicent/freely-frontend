@@ -6,6 +6,7 @@ import { AuthGuard } from "./AuthGuard";
 import { AuthLayout } from "../view/layouts/AuthLayout";
 import { AppLayout } from "../view/layouts/AppLayout";
 import { Clients } from "../view/pages/Clients";
+import { Projects } from "../view/pages/Projects";
 
 export function Router() {
   return (
@@ -21,6 +22,7 @@ export function Router() {
           <Route element={<AppLayout />}>
             <Route path="/" element={<Home />} />
             <Route path="/clients" element={<Clients />} />
+            <Route path="/projects" element={<Projects />} />
           </Route>
         </Route>
       </Routes>

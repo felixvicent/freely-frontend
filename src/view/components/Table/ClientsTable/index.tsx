@@ -26,8 +26,6 @@ export function ClientsTable() {
     clientParams,
   } = useClientsTable();
 
-  console.log(clientParams);
-
   const COLUMNS: ColumnsType<Client> = [
     {
       title: "Nome",

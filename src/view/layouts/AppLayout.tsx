@@ -6,6 +6,7 @@ import {
   AiOutlineMenuUnfold,
   AiOutlineMenuFold,
   AiOutlineUser,
+  AiOutlineProject,
 } from "react-icons/ai";
 import { CiLogout } from "react-icons/ci";
 import { useAuth } from "../../app/hooks/useAuth";
@@ -50,6 +51,12 @@ export function AppLayout() {
               icon: <FiUsers />,
               label: "Clientes",
               onClick: () => navigate("/clients"),
+            },
+            {
+              key: "/projects",
+              icon: <AiOutlineProject />,
+              label: "Projetos",
+              onClick: () => navigate("/projects"),
             },
           ]}
         />
