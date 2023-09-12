@@ -11,6 +11,9 @@ export interface ProjectFormType {
   clientId: string;
   value: number;
   estimedDate: string;
+  activities: {
+    title: string;
+  }[];
 }
 
 export function useProjectForm(onFinish?: () => void, projectId?: string) {
@@ -27,6 +30,9 @@ export function useProjectForm(onFinish?: () => void, projectId?: string) {
       clientId: formData.clientId,
       estimedDate: formData.estimedDate,
       value: formData.value,
+      activities: formData.activities.map((activity) => ({
+        title: activity.title,
+      })),
     };
     try {
       if (projectId) {

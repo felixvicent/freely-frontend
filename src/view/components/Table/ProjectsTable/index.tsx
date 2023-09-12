@@ -52,6 +52,14 @@ export function ProjectsTable() {
       },
     },
     {
+      title: "Atividades",
+      dataIndex: "activities",
+      key: "activities",
+      render: (_: string, project: Project) => {
+        return project.activities.length;
+      },
+    },
+    {
       title: "",
       width: "4rem",
       align: "center" as const,
@@ -117,6 +125,7 @@ export function ProjectsTable() {
             id: selectedProjectsToUpdate?.id ?? "",
             title: selectedProjectsToUpdate?.title ?? "",
             value: selectedProjectsToUpdate?.value ?? 0,
+            activities: selectedProjectsToUpdate?.activities ?? [],
           },
         }}
       />

@@ -3,4 +3,7 @@ export type ProjectForm = {
   clientId: string;
   value: number;
   estimedDate: string;
+  activities: {
+    title: string;
+  }[];
 };

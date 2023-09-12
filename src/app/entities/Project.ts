@@ -1,3 +1,4 @@
+import { Activity } from "./Activity";
 import { Client } from "./Client";
 
 export type Project = {
@@ -6,5 +7,6 @@ export type Project = {
   client: Client;
   value: number;
   estimedDate: string;
-  createdAt: string
+  createdAt: string;
+  activities: Activity[];
 };
