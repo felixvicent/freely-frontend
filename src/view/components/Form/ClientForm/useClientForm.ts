@@ -17,6 +17,8 @@ export interface ClientFormType {
   zipCode: string;
   number: string;
   state: string;
+  complement: string;
+  reference: string;
 }
 
 export function useClientForm(onFinish?: () => void, clientId?: string) {
@@ -40,6 +42,8 @@ export function useClientForm(onFinish?: () => void, clientId?: string) {
         city: formData.city,
         state: formData.state,
         zipCode: formData.zipCode,
+        complement: formData.complement,
+        reference: formData.reference,
       },
     };
     try {

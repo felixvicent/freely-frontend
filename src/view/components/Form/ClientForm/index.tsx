@@ -28,11 +28,7 @@ export function ClientForm({ onCancel, initialValues }: ClientFormProps) {
       >
         <Input />
       </Form.Item>
-      <Form.Item
-        label="Sobrenome"
-        name="lastName"
-        rules={[{ required: true, message: "Sobrenome é obrigatório" }]}
-      >
+      <Form.Item label="Sobrenome" name="lastName">
         <Input />
       </Form.Item>
       <Form.Item
@@ -102,6 +98,19 @@ export function ClientForm({ onCancel, initialValues }: ClientFormProps) {
             rules={[{ required: true, message: "Estado é obrigatório" }]}
           >
             <Select.State />
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Row gutter={16}>
+        <Col span={12}>
+          <Form.Item label="Complemento" name="complement">
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item label="Referência" name="reference">
+            <Input />
           </Form.Item>
         </Col>
       </Row>

@@ -32,7 +32,7 @@ export function ClientsTable() {
       dataIndex: "name",
       key: "name",
       render: (_: string, client: Client) => {
-        return `${client.firstName} ${client.lastName}`;
+        return `${client.firstName} ${client.lastName ?? ""}`;
       },
       filterDropdown: () => <ClientFilter onFilter={handleChangeParams} />,
       filteredValue: clientParams.query ? [clientParams.query] : [],
@@ -140,6 +140,8 @@ export function ClientsTable() {
             zipCode: selectedClientToUpdate?.address.zipCode ?? "",
             city: selectedClientToUpdate?.address.city ?? "",
             state: selectedClientToUpdate?.address.state ?? "",
+            complement: selectedClientToUpdate?.address.complement ?? "",
+            reference: selectedClientToUpdate?.address.reference ?? "",
           },
         }}
       />

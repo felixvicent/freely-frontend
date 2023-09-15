@@ -22,7 +22,7 @@ export function ClientSelect({ ...props }: ClientSelectProps) {
       searchValue={searchTerm}
       onSearch={handleChangeTerm}
       options={clients?.map((client) => ({
-        label: `${client.firstName} ${client.lastName}`,
+        label: `${client.firstName} ${client.lastName ?? ""}`,
         value: client.id,
       }))}
     ></Select>

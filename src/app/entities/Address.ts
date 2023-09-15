@@ -4,4 +4,6 @@ export type Address = {
   zipCode: string;
   number: string;
   state: string;
+  complement: string;
+  reference: string;
 };
