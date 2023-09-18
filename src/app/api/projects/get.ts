@@ -1,4 +1,3 @@
-import { Client } from "../../entities/Client";
 import { Page } from "../../entities/Page";
 import { Project } from "../../entities/Project";
 import { httpClient } from "../../services/httpClient";

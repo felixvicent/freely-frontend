@@ -121,7 +121,7 @@ export function ProjectsTable() {
         formProps={{
           initialValues: {
             clientId: selectedProjectsToUpdate?.client.id ?? "",
-            estimedDate: selectedProjectsToUpdate?.estimedDate ?? "",
+            estimedDate: selectedProjectsToUpdate?.estimatedDate ?? "",
             id: selectedProjectsToUpdate?.id ?? "",
             title: selectedProjectsToUpdate?.title ?? "",
             value: selectedProjectsToUpdate?.value ?? 0,

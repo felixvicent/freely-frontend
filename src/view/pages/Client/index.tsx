@@ -14,7 +14,6 @@ export function Client() {
 
     client?.projects.forEach((project) => {
       project.activities.forEach((activity) => {
-        console.log(activity);
         const previousValue =
           data.find((ac) => ac.status === activity.status)?.total ?? 0;
 
@@ -29,7 +28,6 @@ export function Client() {
       });
     });
 
-    console.log(data);
     return data;
   }, [client]);
 
@@ -83,48 +81,53 @@ export function Client() {
         </Col>
       </Row>
 
-      <div className="mt-6">
-        <h3 className="mb-2">Status</h3>
-        <Row>
-          <Col span={8}>
-            <Card title="Atividades" size="small">
-              <Chart.ActivityStatus activities={activitiesStatusChartData} />
-            </Card>
-          </Col>
-        </Row>
-      </div>
-
-      <div className="mt-6">
-        <h3 className="mb-2">Projetos</h3>
-
-        <Row gutter={16}>
-          {client?.projects.map((project) => (
-            <Col span={6} key={project.id}>
-              <Card
-                size="small"
-                title={<Tooltip title={project.title}>{project.title}</Tooltip>}
-                extra={
-                  <Typography>R$ {formatCurrency(project.value)}</Typography>
-                }
-              >
-                <div className="flex flex-col">
-                  {project.activities.map((activity) => (
-                    <ActivityItem
-                      key={activity.id}
-                      activity={activity.title}
-                      status={
-                        ActivityStatus[
-                          activity.status as keyof typeof ActivityStatus
-                        ]
-                      }
-                    />
-                  ))}
-                </div>
+      {client!.projects.length > 0 && (
+        <div className="mt-6">
+          <h3 className="mb-2">Status</h3>
+          <Row>
+            <Col span={8}>
+              <Card title="Atividades" size="small">
+                <Chart.ActivityStatus activities={activitiesStatusChartData} />
               </Card>
             </Col>
-          ))}
-        </Row>
-      </div>
+          </Row>
+        </div>
+      )}
+      {client!.projects.length > 0 && (
+        <div className="mt-6">
+          <h3 className="mb-2">Projetos</h3>
+
+          <Row gutter={16}>
+            {client?.projects.map((project) => (
+              <Col span={6} key={project.id}>
+                <Card
+                  size="small"
+                  title={
+                    <Tooltip title={project.title}>{project.title}</Tooltip>
+                  }
+                  extra={
+                    <Typography>R$ {formatCurrency(project.value)}</Typography>
+                  }
+                >
+                  <div className="flex flex-col">
+                    {project.activities.map((activity) => (
+                      <ActivityItem
+                        key={activity.id}
+                        activity={activity.title}
+                        status={
+                          ActivityStatus[
+                            activity.status as keyof typeof ActivityStatus
+                          ]
+                        }
+                      />
+                    ))}
+                  </div>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        </div>
+      )}
     </div>
   );
 }

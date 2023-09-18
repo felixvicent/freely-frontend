@@ -6,7 +6,7 @@ export type Project = {
   title: string;
   client: ClientList;
   value: number;
-  estimedDate: string;
+  estimatedDate: string;
   createdAt: string;
   activities: Activity[];
 };

@@ -1,8 +1,9 @@
-import { Client } from "../../../entities/Client";
+import { ClientList } from "../../../entities/ClientList";
 import { httpClient } from "../../../services/httpClient";
+import { ClientForm } from "../../dtos/ClientForm";
 
 export interface FetchCreateClientPayload {
-  body: Omit<Client, "createdAt" | "id">;
+  body: ClientForm;
   path: {
     id: string;
   };
@@ -12,7 +13,10 @@ export async function fetchUpdateClient({
   body,
   path,
 }: FetchCreateClientPayload) {
-  const { data } = await httpClient.put<Client>(`/clients/${path.id}`, body);
+  const { data } = await httpClient.put<ClientList>(
+    `/clients/${path.id}`,
+    body
+  );
 
   return data;
 }

@@ -1,4 +1,4 @@
-import { Client } from "../../../entities/Client";
+import { ClientList } from "../../../entities/ClientList";
 import { httpClient } from "../../../services/httpClient";
 
 export interface ClientParams {
@@ -12,7 +12,7 @@ interface FetchSuggestionClientsPayload {
 export async function fetchSuggestionClients({
   params,
 }: FetchSuggestionClientsPayload) {
-  const { data } = await httpClient.get<Client[]>("/clients/suggestion", {
+  const { data } = await httpClient.get<ClientList[]>("/clients/suggestion", {
     params,
   });
 

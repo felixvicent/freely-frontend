@@ -1,21 +1,14 @@
-import { Dropdown, Table } from "antd";
-import { ClientList } from "../../../../app/entities/Client";
-import { AiOutlineEdit, AiOutlineMore } from "react-icons/ai";
-import { CiTrash } from "react-icons/ci";
+import { Table } from "antd";
+import { ClientList } from "../../../../app/entities/ClientList";
+
 import { useClientsTable } from "./useClientsTable";
 import { ColumnsType } from "antd/es/table";
 import { ClientFilter } from "./ClientFilter";
 import { Link } from "react-router-dom";
 
 export function ClientsTable() {
-  const {
-    clients,
-    isFetching,
-    handleSetClientToUpdate,
-    handleSetClientToDelete,
-    handleChangeParams,
-    clientParams,
-  } = useClientsTable();
+  const { clients, isFetching, handleChangeParams, clientParams } =
+    useClientsTable();
 
   const COLUMNS: ColumnsType<ClientList> = [
     {
@@ -67,39 +60,6 @@ export function ClientsTable() {
       title: "Telefone",
       dataIndex: "telephone",
       key: "telephone",
-    },
-    {
-      title: "",
-      width: "4rem",
-      align: "center" as const,
-      render: (_: string, client: ClientList) => {
-        return (
-          <Dropdown
-            menu={{
-              items: [
-                {
-                  key: "edit",
-                  label: "Editar",
-                  icon: <AiOutlineEdit size={18} />,
-                  onClick: () => {
-                    handleSetClientToUpdate(client);
-                  },
-                },
-                {
-                  key: "remove",
-                  label: "Remover",
-                  icon: <CiTrash size={18} />,
-                  onClick: () => {
-                    handleSetClientToDelete(client);
-                  },
-                },
-              ],
-            }}
-          >
-            <AiOutlineMore />
-          </Dropdown>
-        );
-      },
     },
   ];
 
