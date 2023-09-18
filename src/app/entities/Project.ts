@@ -1,10 +1,10 @@
 import { Activity } from "./Activity";
-import { Client } from "./Client";
+import { ClientList } from "./ClientList";
 
 export type Project = {
   id: string;
   title: string;
-  client: Client;
+  client: ClientList;
   value: number;
   estimedDate: string;
   createdAt: string;

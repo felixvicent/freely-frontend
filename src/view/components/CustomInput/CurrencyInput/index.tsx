@@ -1,5 +1,5 @@
 import { InputNumber, InputNumberProps } from "antd";
-import { formatCurrency } from "../../../../app/utils/formatCurrency";
+import { formatCurrency } from "../../../../app/utils/format/formatCurrency";
 
 interface CurrencyInputProps
   extends Omit<InputNumberProps, "decimalSeparator" | "addonAfter"> {}

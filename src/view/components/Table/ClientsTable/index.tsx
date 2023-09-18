@@ -1,38 +1,33 @@
 import { Dropdown, Table } from "antd";
-import { Client } from "../../../../app/entities/Client";
+import { ClientList } from "../../../../app/entities/Client";
 import { AiOutlineEdit, AiOutlineMore } from "react-icons/ai";
 import { CiTrash } from "react-icons/ci";
-import { Modal } from "../../Modal";
 import { useClientsTable } from "./useClientsTable";
-import { RemoveModal } from "../../Modal/RemoveModal";
 import { ColumnsType } from "antd/es/table";
 import { ClientFilter } from "./ClientFilter";
+import { Link } from "react-router-dom";
 
 export function ClientsTable() {
   const {
     clients,
     isFetching,
-    isEditClientModalOpen,
-    handleCloseEditClientModal,
     handleSetClientToUpdate,
-    selectedClientToUpdate,
-    isDeleteClientModalOpen,
-    handleCloseDeleteClientModal,
     handleSetClientToDelete,
-    selectedClientToDelete,
-    handleDeleteClient,
-    isDeleteClientLoading,
     handleChangeParams,
     clientParams,
   } = useClientsTable();
 
-  const COLUMNS: ColumnsType<Client> = [
+  const COLUMNS: ColumnsType<ClientList> = [
     {
       title: "Nome",
       dataIndex: "name",
       key: "name",
-      render: (_: string, client: Client) => {
-        return `${client.firstName} ${client.lastName ?? ""}`;
+      render: (_: string, client: ClientList) => {
+        return (
+          <Link to={`/clients/${client.id}`}>
+            {client.firstName} {client.lastName ?? ""}
+          </Link>
+        );
       },
       filterDropdown: () => <ClientFilter onFilter={handleChangeParams} />,
       filteredValue: clientParams.query ? [clientParams.query] : [],
@@ -59,6 +54,11 @@ export function ClientsTable() {
       }),
     },
     {
+      title: "Projetos",
+      dataIndex: "quantityOfProjects",
+      key: "quantityOfProjects",
+    },
+    {
       title: "Email",
       dataIndex: "email",
       key: "email",
@@ -72,7 +72,7 @@ export function ClientsTable() {
       title: "",
       width: "4rem",
       align: "center" as const,
-      render: (_: string, client: Client) => {
+      render: (_: string, client: ClientList) => {
         return (
           <Dropdown
             menu={{
@@ -123,35 +123,6 @@ export function ClientsTable() {
             }));
           },
         }}
-      />
-      <Modal.ClientForm
-        isOpen={isEditClientModalOpen}
-        onClose={handleCloseEditClientModal}
-        formProps={{
-          initialValues: {
-            id: selectedClientToUpdate?.id ?? "",
-            firstName: selectedClientToUpdate?.firstName ?? "",
-            lastName: selectedClientToUpdate?.lastName ?? "",
-            email: selectedClientToUpdate?.email ?? "",
-            document: selectedClientToUpdate?.document ?? "",
-            telephone: selectedClientToUpdate?.telephone ?? "",
-            street: selectedClientToUpdate?.address.street ?? "",
-            number: selectedClientToUpdate?.address.number ?? "",
-            zipCode: selectedClientToUpdate?.address.zipCode ?? "",
-            city: selectedClientToUpdate?.address.city ?? "",
-            state: selectedClientToUpdate?.address.state ?? "",
-            complement: selectedClientToUpdate?.address.complement ?? "",
-            reference: selectedClientToUpdate?.address.reference ?? "",
-          },
-        }}
-      />
-      <RemoveModal
-        isOpen={isDeleteClientModalOpen}
-        isLoading={isDeleteClientLoading}
-        message={`Deseja realmente remover o cliente ${selectedClientToDelete?.firstName}`}
-        onClose={handleCloseDeleteClientModal}
-        onSubmit={handleDeleteClient}
-        title="Remover cliente"
       />
     </>
   );

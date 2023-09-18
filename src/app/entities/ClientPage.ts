@@ -1,12 +1,13 @@
 import { Address } from "./Address";
+import { Project } from "./Project";
 
-export type Client = {
+export type ClientPage = {
   id: string;
   firstName: string;
   lastName: string;
   email: string;
-  document: string;
   telephone: string;
+  document: string;
+  projects: Project[];
   address: Address;
-  createdAt: string;
 };

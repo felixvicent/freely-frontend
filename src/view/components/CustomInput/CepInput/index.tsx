@@ -1,5 +1,5 @@
 import { Input, InputProps } from "antd";
-import { formatCep } from "../../../../app/utils/formatCep";
+import { formatCep } from "../../../../app/utils/format/formatCep";
 
 export function CepInput({
   onChange,

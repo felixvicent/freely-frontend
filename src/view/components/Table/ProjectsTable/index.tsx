@@ -6,7 +6,7 @@ import { CiTrash } from "react-icons/ci";
 import { useProjectsTable } from "./useProjectsTable";
 import { Modal } from "../../Modal";
 import { RemoveModal } from "../../Modal/RemoveModal";
-import { formatCurrency } from "../../../../app/utils/formatCurrency";
+import { formatCurrency } from "../../../../app/utils/format/formatCurrency";
 
 export function ProjectsTable() {
   const {

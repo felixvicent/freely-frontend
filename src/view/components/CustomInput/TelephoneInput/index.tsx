@@ -1,5 +1,5 @@
 import { Input, InputProps } from "antd";
-import { formatTelephone } from "../../../../app/utils/formatTelephone";
+import { formatTelephone } from "../../../../app/utils/format/formatTelephone";
 
 export function TelephoneInput({
   onChange,

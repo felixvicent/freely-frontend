@@ -38,7 +38,7 @@ export function AppLayout() {
           </Link>
         </div>
         <Menu
-          selectedKeys={[location.pathname]}
+          selectedKeys={[`/${location.pathname.split("/")[1]}`]}
           items={[
             {
               key: "/",

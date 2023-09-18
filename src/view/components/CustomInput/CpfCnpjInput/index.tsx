@@ -1,5 +1,5 @@
 import { Input, InputProps } from "antd";
-import { formatCpfCnpj } from "../../../../app/utils/formatCpfCnpj";
+import { formatCpfCnpj } from "../../../../app/utils/format/formatCpfCnpj";
 
 export function CpfCnpjInput({
   onChange,

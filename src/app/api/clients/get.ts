@@ -1,4 +1,4 @@
-import { Client } from "../../entities/Client";
+import { ClientList } from "../../entities/ClientList";
 import { Page } from "../../entities/Page";
 import { httpClient } from "../../services/httpClient";
 
@@ -13,7 +13,7 @@ interface FetchListClientsPayload {
 }
 
 export async function fetchListClients({ params }: FetchListClientsPayload) {
-  const { data } = await httpClient.get<Page<Client>>("/clients", {
+  const { data } = await httpClient.get<Page<ClientList>>("/clients", {
     params,
   });
 
