@@ -61,6 +61,7 @@ export function useClientForm(onFinish?: () => void, clientId?: string) {
       }
 
       queryClient.invalidateQueries({ queryKey: ["clients"] });
+      queryClient.invalidateQueries({ queryKey: ["client-details"] });
 
       if (onFinish) {
         onFinish();

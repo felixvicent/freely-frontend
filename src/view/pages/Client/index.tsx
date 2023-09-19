@@ -1,13 +1,26 @@
-import { Card, Col, Row, Spin, Tooltip, Typography } from "antd";
+import { Button, Card, Col, Row, Spin, Tooltip, Typography } from "antd";
 import { ActivityItem } from "./components/ActivityItem";
 import { ActivityStatus } from "../../../app/entities/AcitivtyStatus";
 import { formatCurrency } from "../../../app/utils/format/formatCurrency";
 import { useClient } from "./useClient";
 import { useMemo } from "react";
 import { Chart } from "../../components/Chart";
+import { Modal } from "../../components/Modal";
+import { RemoveModal } from "../../components/Modal/RemoveModal";
 
 export function Client() {
-  const { client, isLoading } = useClient();
+  const {
+    client,
+    isLoading,
+    isUpdateModalOpen,
+    handleCloseUpdateModal,
+    handleOpenUpdateModal,
+    isLoadingDelete,
+    handleRemove,
+    isDeleteModalOpen,
+    handleCloseDeleteModal,
+    handleOpenDeleteModal,
+  } = useClient();
 
   const activitiesStatusChartData = useMemo(() => {
     const data: { status: string; total: number }[] = [];
@@ -18,8 +31,6 @@ export function Client() {
           data.find((ac) => ac.status === activity.status)?.total ?? 0;
 
         const index = data.findIndex((ac) => ac.status === activity.status);
-
-        console.log(data[index]);
 
         data[index >= 0 ? index : data.length] = {
           status: activity.status,
@@ -34,8 +45,20 @@ export function Client() {
   if (isLoading) return <Spin />;
 
   return (
-    <div>
-      <h3 className="mb-2">Cliente</h3>
+    <main>
+      <header className="flex items-center justify-between my-4">
+        <h3 className="mb-2">Cliente</h3>
+        <div className="flex items-center gap-2">
+          <Button onClick={handleOpenUpdateModal}>Editar</Button>
+          <Button
+            onClick={handleOpenDeleteModal}
+            className="bg-red-500 hover:!bg-red-600"
+            type="primary"
+          >
+            Remover
+          </Button>
+        </div>
+      </header>
       <Row gutter={16} align="stretch">
         <Col span={8}>
           <Card size="small" title="Indentificação" className="h-full">
@@ -128,6 +151,38 @@ export function Client() {
           </Row>
         </div>
       )}
-    </div>
+
+      <Modal.ClientForm
+        isOpen={isUpdateModalOpen}
+        onClose={handleCloseUpdateModal}
+        title="Editando clientes"
+        formProps={{
+          initialValues: {
+            id: client?.id ?? "",
+            firstName: client?.firstName ?? "",
+            lastName: client?.lastName ?? "",
+            document: client?.document ?? "",
+            email: client?.email ?? "",
+            telephone: client?.telephone ?? "",
+            city: client?.address.city ?? "",
+            complement: client?.address.complement ?? "",
+            number: client?.address.number ?? "",
+            reference: client?.address.reference ?? "",
+            state: client?.address.state ?? "",
+            street: client?.address.street ?? "",
+            zipCode: client?.address.zipCode ?? "",
+          },
+        }}
+      />
+
+      <RemoveModal
+        isLoading={isLoadingDelete}
+        isOpen={isDeleteModalOpen}
+        message={`Deseja realmente remover o cliente ${client?.firstName}`}
+        onClose={handleCloseDeleteModal}
+        onSubmit={handleRemove}
+        title="Removendo cliente"
+      />
+    </main>
   );
 }
