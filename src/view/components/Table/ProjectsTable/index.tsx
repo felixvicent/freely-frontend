@@ -7,6 +7,7 @@ import { useProjectsTable } from "./useProjectsTable";
 import { Modal } from "../../Modal";
 import { RemoveModal } from "../../Modal/RemoveModal";
 import { formatCurrency } from "../../../../app/utils/format/formatCurrency";
+import { Link } from "react-router-dom";
 
 export function ProjectsTable() {
   const {
@@ -30,6 +31,9 @@ export function ProjectsTable() {
       title: "Título",
       dataIndex: "title",
       key: "title",
+      render: (value: string, project: Project) => (
+        <Link to={`/projects/${project.id}`}>{value}</Link>
+      ),
     },
     {
       title: "Cliente",
@@ -121,7 +125,7 @@ export function ProjectsTable() {
         formProps={{
           initialValues: {
             clientId: selectedProjectsToUpdate?.client.id ?? "",
-            estimedDate: selectedProjectsToUpdate?.estimatedDate ?? "",
+            estimatedDate: selectedProjectsToUpdate?.estimatedDate ?? "",
             id: selectedProjectsToUpdate?.id ?? "",
             title: selectedProjectsToUpdate?.title ?? "",
             value: selectedProjectsToUpdate?.value ?? 0,

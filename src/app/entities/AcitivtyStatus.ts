@@ -1,6 +1,6 @@
 export enum ActivityStatus {
-  "DONE",
-  "WAITING",
-  "PENDING",
-  "PROGRESS",
+  "DONE" = "DONE",
+  "WAITING" = "WAITING",
+  "PENDING" = "PENDING",
+  "PROGRESS" = "PROGRESS",
 }

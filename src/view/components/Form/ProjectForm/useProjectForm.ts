@@ -10,7 +10,7 @@ export interface ProjectFormType {
   title: string;
   clientId: string;
   value: number;
-  estimedDate: string;
+  estimatedDate: string;
   activities: {
     title: string;
   }[];
@@ -28,11 +28,13 @@ export function useProjectForm(onFinish?: () => void, projectId?: string) {
     const payload: FetchCreateProjectPayload["body"] = {
       title: formData.title,
       clientId: formData.clientId,
-      estimedDate: formData.estimedDate,
+      estimatedDate: formData.estimatedDate,
       value: formData.value,
-      activities: formData.activities.map((activity) => ({
-        title: activity.title,
-      })),
+      activities: formData.activities
+        ? formData.activities.map((activity) => ({
+            title: activity.title,
+          }))
+        : [],
     };
     try {
       if (projectId) {
@@ -49,6 +51,7 @@ export function useProjectForm(onFinish?: () => void, projectId?: string) {
       }
 
       queryClient.invalidateQueries({ queryKey: ["projects"] });
+      queryClient.invalidateQueries({ queryKey: ["project-details"] });
 
       if (onFinish) {
         onFinish();

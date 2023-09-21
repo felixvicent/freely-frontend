@@ -8,6 +8,7 @@ import { AppLayout } from "../view/layouts/AppLayout";
 import { Clients } from "../view/pages/Clients";
 import { Projects } from "../view/pages/Projects";
 import { Client } from "../view/pages/Client";
+import { Project } from "../view/pages/Project";
 
 export function Router() {
   return (
@@ -25,6 +26,7 @@ export function Router() {
             <Route path="/clients" element={<Clients />} />
             <Route path="/clients/:clientId" element={<Client />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path="/projects/:projectId" element={<Project />} />
           </Route>
         </Route>
       </Routes>
