@@ -64,7 +64,25 @@ export function Home() {
           >
             <List
               dataSource={dashboard?.latestActivities}
-              renderItem={(activity) => <List.Item>{activity.title}</List.Item>}
+              renderItem={(activity) => (
+                <List.Item className="flex items-center gap-2">
+                  <div className="flex items-center">
+                    <Link
+                      to={`/projects/${activity.project.id}`}
+                      className="max-w-[150px] block text-ellipsis overflow-hidden whitespace-nowrap"
+                    >
+                      {activity.project.title}
+                    </Link>
+                    {" > "}
+                    <Link
+                      to="/activities"
+                      className="ml-2 max-w-[150px] block text-ellipsis overflow-hidden whitespace-nowrap"
+                    >
+                      {activity.title}
+                    </Link>
+                  </div>
+                </List.Item>
+              )}
               footer={
                 <div className="flex justify-end">
                   <Link to="/">Ver todos</Link>
