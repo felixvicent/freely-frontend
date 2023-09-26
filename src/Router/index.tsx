@@ -9,6 +9,7 @@ import { Clients } from "../view/pages/Clients";
 import { Projects } from "../view/pages/Projects";
 import { Client } from "../view/pages/Client";
 import { Project } from "../view/pages/Project";
+import { Activities } from "../view/pages/Activities";
 
 export function Router() {
   return (
@@ -27,6 +28,7 @@ export function Router() {
             <Route path="/clients/:clientId" element={<Client />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:projectId" element={<Project />} />
+            <Route path="/activities" element={<Activities />} />
           </Route>
         </Route>
       </Routes>

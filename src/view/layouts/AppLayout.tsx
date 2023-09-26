@@ -9,6 +9,7 @@ import {
   AiOutlineProject,
 } from "react-icons/ai";
 import { CiLogout } from "react-icons/ci";
+import { BsUiChecks } from "react-icons/bs";
 import { useAuth } from "../../app/hooks/useAuth";
 
 export function AppLayout() {
@@ -51,6 +52,12 @@ export function AppLayout() {
               icon: <FiUsers />,
               label: "Clientes",
               onClick: () => navigate("/clients"),
+            },
+            {
+              key: "/activities",
+              icon: <BsUiChecks />,
+              label: "Atividades",
+              onClick: () => navigate("/activities"),
             },
             {
               key: "/projects",
