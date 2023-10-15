@@ -13,5 +13,5 @@ export async function fetchUpdateActivity({
   path,
   body,
 }: FetchUpdateActivityPayload) {
-  await httpClient.put<Activity>(`/activities/${path.id}`, body);
+  return await httpClient.put<Activity>(`/activities/${path.id}`, body);
 }

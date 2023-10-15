@@ -1,32 +1,19 @@
-import { Button, Card, Col, List, Row, Select, Typography } from "antd";
-import { Link } from "react-router-dom";
-import { ActivityStatus } from "../../../app/entities/AcitivtyStatus";
-import { CiTrash } from "react-icons/ci";
-import { useProject } from "./useProject";
-import { formatCurrency } from "../../../app/utils/format/formatCurrency";
-import dayjs from "dayjs";
-import { Container } from "../../components/Container";
-import { RemoveModal } from "../../components/Modal/RemoveModal";
-import { Modal } from "../../components/Modal";
+import {
+  Button, Card, Col, Row,
+} from 'antd';
+import dayjs from 'dayjs';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Link } from 'react-router-dom';
 
-const activitiesStatus = [
-  {
-    label: "Pendente",
-    value: ActivityStatus.PENDING,
-  },
-  {
-    label: "Em espera",
-    value: ActivityStatus.WAITING,
-  },
-  {
-    label: "Em andamento",
-    value: ActivityStatus.PROGRESS,
-  },
-  {
-    label: "Feito",
-    value: ActivityStatus.DONE,
-  },
-];
+import { ActivityStatus } from '../../../app/entities/AcitivtyStatus';
+import { formatCurrency } from '../../../app/utils/format/formatCurrency';
+import { Container } from '../../components/Container';
+import { Drop } from '../../components/Drop';
+import { Modal } from '../../components/Modal';
+import { RemoveModal } from '../../components/Modal/RemoveModal';
+
+import { useProject } from './useProject';
 
 export function Project() {
   const {
@@ -44,10 +31,8 @@ export function Project() {
     isCreateActivityModalOpen,
     handleRemoveActivity,
     handleCloseDeleteActivityModal,
-    handleOpenDeleteActivityModal,
     isDeleteActivityModalOpen,
     selectedActivityToDelete,
-    handleUpdateActivity,
   } = useProject();
 
   return (
@@ -71,17 +56,22 @@ export function Project() {
             <Card size="small" title="Cliente" className="h-full">
               <div className="flex flex-col">
                 <span>
-                  <strong>Nome:</strong>{" "}
-                  <Link to={`/clients/${project?.client.id}`}>{`${
-                    project?.client.firstName
-                  } ${project?.client.lastName ?? ""}`}</Link>
+                  <strong>Nome:</strong>
+                  {' '}
+                  <Link to={`/clients/${project?.client.id}`}>
+                    {`${project?.client.firstName} ${project?.client.lastName ?? ''}`}
+                  </Link>
                 </span>
 
                 <span>
-                  <strong>Email:</strong> {project?.client.email}
+                  <strong>Email:</strong>
+                  {' '}
+                  {project?.client.email}
                 </span>
                 <span>
-                  <strong>Telefone:</strong> {project?.client.telephone}
+                  <strong>Telefone:</strong>
+                  {' '}
+                  {project?.client.telephone}
                 </span>
               </div>
             </Card>
@@ -90,14 +80,21 @@ export function Project() {
             <Card size="small" title="Dados" className="h-full">
               <div className="flex flex-col">
                 <span>
-                  <strong>Título:</strong> {project?.title}
+                  <strong>Título:</strong>
+                  {' '}
+                  {project?.title}
                 </span>
                 <span>
-                  <strong>Valor:</strong> R$ {formatCurrency(project?.value)}
+                  <strong>Valor:</strong>
+                  {' '}
+                  R$
+                  {' '}
+                  {formatCurrency(project?.value)}
                 </span>
                 <span>
-                  <strong>Data estimada:</strong>{" "}
-                  {dayjs(project?.estimatedDate).format("DD/MM/YYYY")}
+                  <strong>Data estimada:</strong>
+                  {' '}
+                  {dayjs(project?.estimatedDate).format('DD/MM/YYYY')}
                 </span>
               </div>
             </Card>
@@ -105,71 +102,67 @@ export function Project() {
         </Row>
 
         <div className="mt-6">
-          <h3 className="mb-2">Status</h3>
           <Row>
             <Col span={24}>
               <Card
                 title="Atividades"
                 size="small"
-                bodyStyle={{ padding: "0 8px" }}
-                headStyle={{ padding: 16 }}
-                extra={
+                bodyStyle={{ padding: '0 8px, 8px' }}
+                headStyle={{ padding: 8, borderBottom: 'none' }}
+                extra={(
                   <Button onClick={handleOpenCreateActivityModal}>
                     Adicionar atividade
                   </Button>
-                }
+                )}
               >
-                <List
-                  dataSource={project?.activities}
-                  renderItem={(activity) => (
-                    <List.Item key={activity.id} className="!p-2">
-                      <div className="flex w-full items-center justify-between">
-                        <Typography.Text
-                          editable={{
-                            onChange: (value) => {
-                              handleUpdateActivity(
-                                ActivityStatus[
-                                  activity.status as keyof typeof ActivityStatus
-                                ],
-                                value,
-                                activity.id
-                              );
-                            },
-                          }}
-                        >
-                          {activity.title}
-                        </Typography.Text>
-
-                        <div className="flex items-center gap-2">
-                          <Select
-                            className="w-[200px]"
-                            value={
-                              ActivityStatus[
-                                activity.status as keyof typeof ActivityStatus
-                              ]
-                            }
-                            options={activitiesStatus}
-                            onChange={(status) =>
-                              handleUpdateActivity(
-                                status,
-                                activity.title,
-                                activity.id
-                              )
-                            }
-                          ></Select>
-                          <Button
-                            onClick={() =>
-                              handleOpenDeleteActivityModal(activity)
-                            }
-                            className="w-8 h-8 flex items-center justify-center p-0"
-                          >
-                            <CiTrash />
-                          </Button>
-                        </div>
-                      </div>
-                    </List.Item>
-                  )}
-                />
+                <DndProvider backend={HTML5Backend}>
+                  <Row gutter={16}>
+                    <Col span={6}>
+                      <Drop.Activities
+                        projectId={project?.id ?? ''}
+                        activities={project?.activities.filter(
+                          (activity) => activity.status === ActivityStatus.PENDING,
+                        )}
+                        isLoading={isLoading}
+                        status={ActivityStatus.PENDING}
+                        title="Pendentes"
+                      />
+                    </Col>
+                    <Col span={6}>
+                      <Drop.Activities
+                        projectId={project?.id ?? ''}
+                        activities={project?.activities.filter(
+                          (activity) => activity.status === ActivityStatus.WAITING,
+                        )}
+                        isLoading={isLoading}
+                        status={ActivityStatus.WAITING}
+                        title="Pendentes"
+                      />
+                    </Col>
+                    <Col span={6}>
+                      <Drop.Activities
+                        projectId={project?.id ?? ''}
+                        activities={project?.activities.filter(
+                          (activity) => activity.status === ActivityStatus.PROGRESS,
+                        )}
+                        isLoading={isLoading}
+                        status={ActivityStatus.PROGRESS}
+                        title="Pendentes"
+                      />
+                    </Col>
+                    <Col span={6}>
+                      <Drop.Activities
+                        projectId={project?.id ?? ''}
+                        activities={project?.activities.filter(
+                          (activity) => activity.status === ActivityStatus.DONE,
+                        )}
+                        isLoading={isLoading}
+                        status={ActivityStatus.DONE}
+                        title="Pendentes"
+                      />
+                    </Col>
+                  </Row>
+                </DndProvider>
               </Card>
             </Col>
           </Row>
@@ -188,11 +181,11 @@ export function Project() {
         onClose={handleCloseUpdateModal}
         formProps={{
           initialValues: {
-            id: project?.id ?? "",
+            id: project?.id ?? '',
             activities: [],
-            clientId: project?.client.id ?? "",
-            estimatedDate: project?.estimatedDate ?? "",
-            title: project?.title ?? "",
+            clientId: project?.client.id ?? '',
+            estimatedDate: project?.estimatedDate ?? '',
+            title: project?.title ?? '',
             value: project?.value ?? 0,
           },
         }}
@@ -202,7 +195,7 @@ export function Project() {
         isOpen={isCreateActivityModalOpen}
         onClose={handleCloseCreateActivityModal}
         title="Criando atividade"
-        formProps={{ initialValues: { projectId: project?.id ?? "" } }}
+        formProps={{ initialValues: { projectId: project?.id ?? '' } }}
       />
 
       <RemoveModal

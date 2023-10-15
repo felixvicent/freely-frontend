@@ -1,6 +1,6 @@
 import { Page } from "../../entities/Page";
 import { Project } from "../../entities/Project";
-import { httpClient } from "../../services/httpClient";
+import { apiException, httpClient } from "../../services/httpClient";
 
 export interface ProjectParams {
   page?: number;
@@ -12,9 +12,13 @@ interface FetchListProjectsPayload {
 }
 
 export async function fetchListProjects({ params }: FetchListProjectsPayload) {
-  const { data } = await httpClient.get<Page<Project>>("/projects", {
-    params,
-  });
+  try {
+    const { data } = await httpClient.get<Page<Project>>("/projects", {
+      params,
+    });
 
-  return data;
+    return data;
+  } catch (error) {
+    throw apiException(error);
+  }
 }

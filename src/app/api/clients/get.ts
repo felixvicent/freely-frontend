@@ -1,6 +1,6 @@
 import { ClientList } from "../../entities/ClientList";
 import { Page } from "../../entities/Page";
-import { httpClient } from "../../services/httpClient";
+import { apiException, httpClient } from "../../services/httpClient";
 
 export interface ClientParams {
   page?: number;
@@ -13,9 +13,13 @@ interface FetchListClientsPayload {
 }
 
 export async function fetchListClients({ params }: FetchListClientsPayload) {
-  const { data } = await httpClient.get<Page<ClientList>>("/clients", {
-    params,
-  });
+  try {
+    const { data } = await httpClient.get<Page<ClientList>>("/clients", {
+      params,
+    });
 
-  return data;
+    return data;
+  } catch (error) {
+    throw apiException(error);
+  }
 }

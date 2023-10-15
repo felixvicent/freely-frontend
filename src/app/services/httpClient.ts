@@ -5,7 +5,7 @@ export interface ApiDefaultErrorResponse {
   message?: string;
 }
 
-export interface ApiErrorResponse extends AxiosError<ApiDefaultErrorResponse> {}
+export interface ApiErrorResponse extends AxiosError<ApiDefaultErrorResponse> { }
 
 export const httpClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -20,8 +20,14 @@ httpClient.interceptors.request.use((config) => {
 
   return config;
 });
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const apiException = (error: any) => {
+  if (error.response.status === 403) {
+    console.log('aqui')
+    localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
+    window.location.href = "/login";
+  }
   if (!isAxiosError(error)) {
     return {
       message: error.message,

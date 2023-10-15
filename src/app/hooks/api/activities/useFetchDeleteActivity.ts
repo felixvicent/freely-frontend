@@ -1,5 +1,6 @@
-import { useMutation } from "react-query";
-import { fetchDeleteActivity } from "../../../api/activities/{id}/delete";
+import { useMutation } from 'react-query';
+
+import { fetchDeleteActivity } from '../../../api/activities/{id}/delete';
 
 export function useFetchDeleteActivity() {
   const { mutateAsync, isLoading } = useMutation({

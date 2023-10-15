@@ -89,7 +89,6 @@ export function useProject() {
 
       handleCloseDeleteActivityModal();
     } catch (error) {
-      console.log(error);
       toast.error(apiException(error).message);
     }
   }
