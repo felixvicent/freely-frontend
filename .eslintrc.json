@@ -82,6 +82,7 @@
         "caughtErrorsIgnorePattern": "^_"
       }
     ],
-    "react/require-default-props": "off"
+    "react/require-default-props": "off",
+    "react/jsx-no-constructed-context-values": "off"
   }
 }

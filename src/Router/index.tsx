@@ -1,5 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import { AdminLayout } from '../view/layouts/AdminLayout';
 import { AppLayout } from '../view/layouts/AppLayout';
 import { AuthLayout } from '../view/layouts/AuthLayout';
 import { Client } from '../view/pages/Client';
@@ -29,6 +30,12 @@ export function Router() {
             <Route path="/clients/:clientId" element={<Client />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:projectId" element={<Project />} />
+          </Route>
+        </Route>
+        <Route element={<AuthGuard isPrivate isAdmin />}>
+          <Route element={<AdminLayout />}>
+            <Route path="/admin" element={<h1>Admin</h1>} />
+            <Route path="/admin/users" element={<h1>Users</h1>} />
           </Route>
         </Route>
       </Routes>
