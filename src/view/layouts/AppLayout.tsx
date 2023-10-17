@@ -1,16 +1,16 @@
-import { Avatar, Button, Dropdown, Layout, Menu } from "antd";
-import { useState } from "react";
-import { Outlet, useNavigate, useLocation, Link } from "react-router-dom";
-import { FiHome, FiUsers } from "react-icons/fi";
+import { Avatar, Button, Dropdown, Layout, Menu } from 'antd';
+import { useState } from 'react';
 import {
   AiOutlineMenuUnfold,
   AiOutlineMenuFold,
   AiOutlineUser,
   AiOutlineProject,
-} from "react-icons/ai";
-import { CiLogout } from "react-icons/ci";
-import { BsUiChecks } from "react-icons/bs";
-import { useAuth } from "../../app/hooks/useAuth";
+} from 'react-icons/ai';
+import { CiLogout } from 'react-icons/ci';
+import { FiHome, FiUsers } from 'react-icons/fi';
+import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
+
+import { useAuth } from '../../app/hooks/useAuth';
 
 export function AppLayout() {
   const [collapsed, setCollapsed] = useState(false);
@@ -31,39 +31,33 @@ export function AppLayout() {
         <div className="flex items-center justify-center py-4">
           <Link
             to="/"
-            className={`font-extrabold ${
-              collapsed ? "text-base" : "text-3xl"
-            } text-purple-700 hover:text-purple-700`}
+            className={`font-extrabold
+            ${collapsed ? 'text-base' : 'text-3xl'}
+             text-purple-700 hover:text-purple-700`}
           >
             Freely
           </Link>
         </div>
         <Menu
-          selectedKeys={[`/${location.pathname.split("/")[1]}`]}
+          selectedKeys={[`/${location.pathname.split('/')[1]}`]}
           items={[
             {
-              key: "/",
+              key: '/',
               icon: <FiHome />,
-              label: "Home",
-              onClick: () => navigate("/"),
+              label: 'Home',
+              onClick: () => navigate('/'),
             },
             {
-              key: "/clients",
+              key: '/clients',
               icon: <FiUsers />,
-              label: "Clientes",
-              onClick: () => navigate("/clients"),
+              label: 'Clientes',
+              onClick: () => navigate('/clients'),
             },
             {
-              key: "/activities",
-              icon: <BsUiChecks />,
-              label: "Atividades",
-              onClick: () => navigate("/activities"),
-            },
-            {
-              key: "/projects",
+              key: '/projects',
               icon: <AiOutlineProject />,
-              label: "Projetos",
-              onClick: () => navigate("/projects"),
+              label: 'Projetos',
+              onClick: () => navigate('/projects'),
             },
           ]}
         />
@@ -80,13 +74,13 @@ export function AppLayout() {
               )
             }
             onClick={() => setCollapsed((prevState) => !prevState)}
-          ></Button>
+          />
           <Dropdown
             menu={{
               items: [
                 {
-                  key: "logout",
-                  label: "Sair",
+                  key: 'logout',
+                  label: 'Sair',
                   icon: <CiLogout />,
                   onClick: signout,
                 },

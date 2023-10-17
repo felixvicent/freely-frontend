@@ -12,10 +12,16 @@ interface ActivitiesDraggableProps {
   projectId: string;
 }
 
-export function ActivitiesDraggable({ activity, projectId }: ActivitiesDraggableProps) {
+export function ActivitiesDraggable({
+  activity,
+  projectId,
+}: ActivitiesDraggableProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const { drag, handleDeleteActivity, isLoading } = useActivitiesDraggable(activity, projectId);
+  const { drag, handleDeleteActivity, isLoading } = useActivitiesDraggable(
+    activity,
+    projectId,
+  );
 
   return (
     <>
@@ -23,7 +29,7 @@ export function ActivitiesDraggable({ activity, projectId }: ActivitiesDraggable
         size="small"
         ref={drag}
         title={activity.title}
-        extra={(
+        extra={
           <Button
             className="p-0"
             type="link"
@@ -31,7 +37,7 @@ export function ActivitiesDraggable({ activity, projectId }: ActivitiesDraggable
           >
             <BsTrash color="#f00" />
           </Button>
-        )}
+        }
       />
       <Modal.Remove
         message={`Deseja realmente remover a atividade ${activity.title}`}

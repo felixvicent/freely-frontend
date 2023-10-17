@@ -16,11 +16,15 @@ interface ActivitiesDropProps {
   isLoading: boolean;
   status: ActivityStatus;
   title: string;
-  projectId: string
+  projectId: string;
 }
 
 export function ActivitiesDrop({
-  activities, isLoading, status, title, projectId,
+  activities,
+  isLoading,
+  status,
+  title,
+  projectId,
 }: ActivitiesDropProps) {
   const { drop, isActive } = useActivitiesDrop(status);
 

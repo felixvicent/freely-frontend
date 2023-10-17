@@ -1,6 +1,4 @@
-import {
-  Button, Card, Col, Row,
-} from 'antd';
+import { Button, Card, Col, Row } from 'antd';
 import dayjs from 'dayjs';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -56,22 +54,18 @@ export function Project() {
             <Card size="small" title="Cliente" className="h-full">
               <div className="flex flex-col">
                 <span>
-                  <strong>Nome:</strong>
-                  {' '}
+                  <strong>Nome:</strong>{' '}
                   <Link to={`/clients/${project?.client.id}`}>
-                    {`${project?.client.firstName} ${project?.client.lastName ?? ''}`}
+                    {`${project?.client.firstName}
+                    ${project?.client.lastName ?? ''}`}
                   </Link>
                 </span>
 
                 <span>
-                  <strong>Email:</strong>
-                  {' '}
-                  {project?.client.email}
+                  <strong>Email:</strong> {project?.client.email}
                 </span>
                 <span>
-                  <strong>Telefone:</strong>
-                  {' '}
-                  {project?.client.telephone}
+                  <strong>Telefone:</strong> {project?.client.telephone}
                 </span>
               </div>
             </Card>
@@ -80,20 +74,13 @@ export function Project() {
             <Card size="small" title="Dados" className="h-full">
               <div className="flex flex-col">
                 <span>
-                  <strong>Título:</strong>
-                  {' '}
-                  {project?.title}
+                  <strong>Título:</strong> {project?.title}
                 </span>
                 <span>
-                  <strong>Valor:</strong>
-                  {' '}
-                  R$
-                  {' '}
-                  {formatCurrency(project?.value)}
+                  <strong>Valor:</strong> R$ {formatCurrency(project?.value)}
                 </span>
                 <span>
-                  <strong>Data estimada:</strong>
-                  {' '}
+                  <strong>Data estimada:</strong>{' '}
                   {dayjs(project?.estimatedDate).format('DD/MM/YYYY')}
                 </span>
               </div>
@@ -109,11 +96,11 @@ export function Project() {
                 size="small"
                 bodyStyle={{ padding: '0 8px, 8px' }}
                 headStyle={{ padding: 8, borderBottom: 'none' }}
-                extra={(
+                extra={
                   <Button onClick={handleOpenCreateActivityModal}>
                     Adicionar atividade
                   </Button>
-                )}
+                }
               >
                 <DndProvider backend={HTML5Backend}>
                   <Row gutter={16}>
@@ -121,7 +108,8 @@ export function Project() {
                       <Drop.Activities
                         projectId={project?.id ?? ''}
                         activities={project?.activities.filter(
-                          (activity) => activity.status === ActivityStatus.PENDING,
+                          (activity) =>
+                            activity.status === ActivityStatus.PENDING,
                         )}
                         isLoading={isLoading}
                         status={ActivityStatus.PENDING}
@@ -132,7 +120,8 @@ export function Project() {
                       <Drop.Activities
                         projectId={project?.id ?? ''}
                         activities={project?.activities.filter(
-                          (activity) => activity.status === ActivityStatus.WAITING,
+                          (activity) =>
+                            activity.status === ActivityStatus.WAITING,
                         )}
                         isLoading={isLoading}
                         status={ActivityStatus.WAITING}
@@ -143,7 +132,8 @@ export function Project() {
                       <Drop.Activities
                         projectId={project?.id ?? ''}
                         activities={project?.activities.filter(
-                          (activity) => activity.status === ActivityStatus.PROGRESS,
+                          (activity) =>
+                            activity.status === ActivityStatus.PROGRESS,
                         )}
                         isLoading={isLoading}
                         status={ActivityStatus.PROGRESS}

@@ -8,7 +8,7 @@ import { useFetchDeleteActivity } from '../../../../app/hooks/api/activities/use
 import { useFetchUpdateActivity } from '../../../../app/hooks/api/activities/useFetchUpdateActivities';
 import { apiException } from '../../../../app/services/httpClient';
 
-interface DropResult {
+interface IDropResult {
   status: ActivityStatus;
 }
 
@@ -27,7 +27,7 @@ export function useActivitiesDraggable(activity: Activity, projectId: string) {
       type: 'box',
       item: activity,
       end: (item, monitor) => {
-        const dropResult = monitor.getDropResult<DropResult>();
+        const dropResult = monitor.getDropResult<IDropResult>();
         if (item && dropResult) {
           updateActivity({
             path: { id: item.id },
