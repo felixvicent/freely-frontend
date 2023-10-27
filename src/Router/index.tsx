@@ -10,6 +10,7 @@ import { Login } from '../view/pages/Login';
 import { Project } from '../view/pages/Project';
 import { Projects } from '../view/pages/Projects';
 import { Register } from '../view/pages/Register';
+import { Users } from '../view/pages/Users';
 
 import { AuthGuard } from './AuthGuard';
 
@@ -35,7 +36,7 @@ export function Router() {
         <Route element={<AuthGuard isPrivate isAdmin />}>
           <Route element={<AdminLayout />}>
             <Route path="/admin" element={<h1>Admin</h1>} />
-            <Route path="/admin/users" element={<h1>Users</h1>} />
+            <Route path="/admin/users" element={<Users />} />
           </Route>
         </Route>
       </Routes>
