@@ -22,7 +22,7 @@ export function Users() {
       </div>
 
       <Table.Users />
-      <Modal.ClientForm
+      <Modal.UserForm
         isOpen={isAddUserModalOpen}
         onClose={handleCloseAddUserModal}
         title="Adicionando usuário"

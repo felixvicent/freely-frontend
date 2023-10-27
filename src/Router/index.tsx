@@ -9,7 +9,6 @@ import { Home } from '../view/pages/Home';
 import { Login } from '../view/pages/Login';
 import { Project } from '../view/pages/Project';
 import { Projects } from '../view/pages/Projects';
-import { Register } from '../view/pages/Register';
 import { Users } from '../view/pages/Users';
 
 import { AuthGuard } from './AuthGuard';
@@ -21,7 +20,6 @@ export function Router() {
         <Route element={<AuthGuard isPrivate={false} />}>
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
           </Route>
         </Route>
         <Route element={<AuthGuard isPrivate />}>

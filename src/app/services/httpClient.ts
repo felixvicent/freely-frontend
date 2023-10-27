@@ -1,10 +1,12 @@
-import axios, { AxiosError, isAxiosError } from "axios";
-import { localStorageKeys } from "../config/localStorageKeys";
+import axios, { AxiosError, isAxiosError } from 'axios';
+
+import { localStorageKeys } from '../config/localStorageKeys';
 
 export interface ApiDefaultErrorResponse {
   message?: string;
 }
 
+// eslint-disable-next-line prettier/prettier
 export interface ApiErrorResponse extends AxiosError<ApiDefaultErrorResponse> { }
 
 export const httpClient = axios.create({
@@ -24,9 +26,8 @@ httpClient.interceptors.request.use((config) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const apiException = (error: any) => {
   if (error.response.status === 403) {
-    console.log('aqui')
     localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
-    window.location.href = "/login";
+    window.location.href = '/login';
   }
   if (!isAxiosError(error)) {
     return {
@@ -39,7 +40,7 @@ export const apiException = (error: any) => {
   const axiosError = error as ApiErrorResponse;
 
   return {
-    message: axiosError.response?.data?.message || "Ocorreu um erro inesperado",
+    message: axiosError.response?.data?.message || 'Ocorreu um erro inesperado',
     date: null,
     code: axiosError.response?.status,
   };
