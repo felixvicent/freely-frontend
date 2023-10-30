@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AdminLayout } from '../view/layouts/AdminLayout';
 import { AppLayout } from '../view/layouts/AppLayout';
 import { AuthLayout } from '../view/layouts/AuthLayout';
+import { ActiveAccount } from '../view/pages/ActiveAccount';
 import { Client } from '../view/pages/Client';
 import { Clients } from '../view/pages/Clients';
 import { Home } from '../view/pages/Home';
@@ -36,6 +37,9 @@ export function Router() {
             <Route path="/admin" element={<h1>Admin</h1>} />
             <Route path="/admin/users" element={<Users />} />
           </Route>
+        </Route>
+        <Route element={<AuthLayout />}>
+          <Route path="/activeAccount" element={<ActiveAccount />} />
         </Route>
       </Routes>
     </BrowserRouter>

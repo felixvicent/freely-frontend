@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 
 import { User } from '../../../../app/entities/User';
@@ -40,9 +40,12 @@ export function UsersTable() {
       }),
     },
     {
-      title: 'Projetos',
-      dataIndex: 'quantityOfProjects',
-      key: 'quantityOfProjects',
+      title: 'Status',
+      dataIndex: 'active',
+      key: 'active',
+      render: (value: boolean) => (
+        <Tag color={value ? 'green' : 'red'}>{value ? 'Ativo' : 'Inativo'}</Tag>
+      ),
     },
     {
       title: 'Email',
