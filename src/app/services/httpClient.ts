@@ -26,8 +26,10 @@ httpClient.interceptors.request.use((config) => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const apiException = (error: any) => {
   if (error.response.status === 403) {
-    localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
-    window.location.href = '/login';
+    if (localStorage.getItem(localStorageKeys.ACCESS_TOKEN)) {
+      localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
+      window.location.href = '/login';
+    }
   }
   if (!isAxiosError(error)) {
     return {

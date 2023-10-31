@@ -1,6 +1,6 @@
-import { Modal, Typography } from "antd";
+import { Modal, Typography } from 'antd';
 
-interface RemoveModalProps {
+interface ConfirmModalProps {
   isOpen: boolean;
   isLoading: boolean;
   onSubmit: () => void;
@@ -9,14 +9,14 @@ interface RemoveModalProps {
   title: string;
 }
 
-export function RemoveModal({
+export function ConfirmModal({
   isLoading,
   isOpen,
   message,
   onClose,
   onSubmit,
   title,
-}: RemoveModalProps) {
+}: ConfirmModalProps) {
   return (
     <Modal
       open={isOpen}

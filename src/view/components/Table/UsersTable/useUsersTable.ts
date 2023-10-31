@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
+import { useQueryClient } from 'react-query';
 
 import { UserParams } from '../../../../app/api/users/get';
+import { User } from '../../../../app/entities/User';
 import { useFetchListUsers } from '../../../../app/hooks/api/users/useFetchListUsers';
 import { useFetchSuggestionUsers } from '../../../../app/hooks/api/users/useFetchSuggestionUsers';
+import { useFetchToggleUserActive } from '../../../../app/hooks/api/users/useFetchToggleUserActive';
 
 export function useUsersTable() {
   const [userParams, setUserParams] = useState<UserParams>({
@@ -13,6 +16,12 @@ export function useUsersTable() {
   });
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+  const [selectedUserToUpdate, setSelectedUserToUpdate] = useState<User>();
+  const [selectedUserToDelete, setSelectedUserToDelete] = useState<User>();
+  const [selectedUserToToggleActive, setSelectedUserToToggleActive] =
+    useState<User>();
+
+  const queryClient = useQueryClient();
 
   const {
     users,
@@ -24,6 +33,20 @@ export function useUsersTable() {
     isFetching: isUsersSuggestionLoading,
     refetch: refetchUsersSuggestion,
   } = useFetchSuggestionUsers(searchTerm);
+  const { isLoading: isToggleActiveLoading, mutateAsync: fetchToggleActive } =
+    useFetchToggleUserActive();
+
+  async function toggleActive() {
+    if (!selectedUserToToggleActive) return;
+
+    await fetchToggleActive({
+      path: { userId: selectedUserToToggleActive?.id },
+    });
+
+    queryClient.invalidateQueries({ queryKey: ['users'] });
+
+    setSelectedUserToToggleActive(undefined);
+  }
 
   function handleChangeTerm(text: string) {
     setSearchTerm(text);
@@ -55,6 +78,22 @@ export function useUsersTable() {
     setSelectedUsers((prevState) => prevState.filter((id) => id !== value));
   }
 
+  function handleOpenEditUserModal(user: User) {
+    setSelectedUserToUpdate(user);
+  }
+
+  function handleOpenRemoveUserModal(user: User) {
+    setSelectedUserToDelete(user);
+  }
+
+  function handleCloseToggleActiveModal() {
+    setSelectedUserToToggleActive(undefined);
+  }
+
+  function handleOpenToggleActiveModal(user: User) {
+    setSelectedUserToToggleActive(user);
+  }
+
   useEffect(() => {
     refetchUsersSuggestion();
   }, [searchTerm, refetchUsersSuggestion]);
@@ -77,5 +116,14 @@ export function useUsersTable() {
     handleAddUserToSearch,
     handleRemoveUserToSearch,
     selectedUsers,
+    selectedUserToUpdate,
+    selectedUserToDelete,
+    handleOpenEditUserModal,
+    handleOpenRemoveUserModal,
+    toggleActive,
+    isToggleActiveLoading,
+    selectedUserToToggleActive,
+    handleCloseToggleActiveModal,
+    handleOpenToggleActiveModal,
   };
 }
