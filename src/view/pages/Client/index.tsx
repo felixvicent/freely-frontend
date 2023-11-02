@@ -1,14 +1,15 @@
-import { Button, Card, Col, Row, Tooltip, Typography } from "antd";
-import { ActivityItem } from "./components/ActivityItem";
-import { ActivityStatus } from "../../../app/entities/AcitivtyStatus";
-import { formatCurrency } from "../../../app/utils/format/formatCurrency";
-import { useClient } from "./useClient";
-import { useMemo } from "react";
-import { Chart } from "../../components/Chart";
-import { Modal } from "../../components/Modal";
-import { RemoveModal } from "../../components/Modal/RemoveModal";
-import { Container } from "../../components/Container";
-import { Link } from "react-router-dom";
+import { Button, Card, Col, Row, Tooltip, Typography } from 'antd';
+import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
+
+import { ActivityStatus } from '../../../app/entities/AcitivtyStatus';
+import { formatCurrency } from '../../../app/utils/format/formatCurrency';
+import { Chart } from '../../components/Chart';
+import { Container } from '../../components/Container';
+import { Modal } from '../../components/Modal';
+
+import { ActivityItem } from './components/ActivityItem';
+import { useClient } from './useClient';
 
 export function Client() {
   const {
@@ -65,8 +66,8 @@ export function Client() {
             <Card size="small" title="Indentificação" className="h-full">
               <div className="flex flex-col">
                 <span>
-                  <strong>Nome:</strong>{" "}
-                  {`${client?.firstName} ${client?.lastName ?? ""}`}
+                  <strong>Nome:</strong>{' '}
+                  {`${client?.firstName} ${client?.lastName ?? ''}`}
                 </span>
                 <span>
                   <strong>CPF/CNPJ:</strong> {client?.document}
@@ -90,11 +91,11 @@ export function Client() {
             <Card size="small" title="Endereço" className="-hull">
               <div className="flex flex-col text-xs">
                 <span>
-                  <strong>Endereço:</strong> {client?.address.street},{" "}
+                  <strong>Endereço:</strong> {client?.address.street},{' '}
                   {client?.address.number}
                 </span>
                 <span>
-                  {client?.address.city} - {client?.address.state},{" "}
+                  {client?.address.city} - {client?.address.state},{' '}
                   {client?.address.zipCode}
                 </span>
                 <span>
@@ -147,9 +148,8 @@ export function Client() {
                           key={activity.id}
                           activity={activity.title}
                           status={
-                            ActivityStatus[
-                              activity.status as keyof typeof ActivityStatus
-                            ]
+                            // eslint-disable-next-line prettier/prettier
+                            ActivityStatus[activity.status as keyof typeof ActivityStatus]
                           }
                         />
                       ))}
@@ -167,24 +167,24 @@ export function Client() {
           title="Editando clientes"
           formProps={{
             initialValues: {
-              id: client?.id ?? "",
-              firstName: client?.firstName ?? "",
-              lastName: client?.lastName ?? "",
-              document: client?.document ?? "",
-              email: client?.email ?? "",
-              telephone: client?.telephone ?? "",
-              city: client?.address.city ?? "",
-              complement: client?.address.complement ?? "",
-              number: client?.address.number ?? "",
-              reference: client?.address.reference ?? "",
-              state: client?.address.state ?? "",
-              street: client?.address.street ?? "",
-              zipCode: client?.address.zipCode ?? "",
+              id: client?.id ?? '',
+              firstName: client?.firstName ?? '',
+              lastName: client?.lastName ?? '',
+              document: client?.document ?? '',
+              email: client?.email ?? '',
+              telephone: client?.telephone ?? '',
+              city: client?.address.city ?? '',
+              complement: client?.address.complement ?? '',
+              number: client?.address.number ?? '',
+              reference: client?.address.reference ?? '',
+              state: client?.address.state ?? '',
+              street: client?.address.street ?? '',
+              zipCode: client?.address.zipCode ?? '',
             },
           }}
         />
 
-        <RemoveModal
+        <Modal.Confirm
           isLoading={isLoadingDelete}
           isOpen={isDeleteModalOpen}
           message={`Deseja realmente remover o cliente ${client?.firstName}`}

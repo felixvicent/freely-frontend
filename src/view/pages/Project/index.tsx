@@ -9,7 +9,6 @@ import { formatCurrency } from '../../../app/utils/format/formatCurrency';
 import { Container } from '../../components/Container';
 import { Drop } from '../../components/Drop';
 import { Modal } from '../../components/Modal';
-import { RemoveModal } from '../../components/Modal/RemoveModal';
 
 import { useProject } from './useProject';
 
@@ -158,7 +157,7 @@ export function Project() {
           </Row>
         </div>
       </Container.Loading>
-      <RemoveModal
+      <Modal.Confirm
         isLoading={isLoading}
         isOpen={isDeleteProjectModalOpen}
         message={`Deseja realmente remover o projeto ${project?.title}`}
@@ -188,7 +187,7 @@ export function Project() {
         formProps={{ initialValues: { projectId: project?.id ?? '' } }}
       />
 
-      <RemoveModal
+      <Modal.Confirm
         isLoading={isLoading}
         isOpen={isDeleteActivityModalOpen}
         message={`Deseja realmente remover a atividade ${selectedActivityToDelete?.title}`}

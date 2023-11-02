@@ -1,13 +1,14 @@
-import { Dropdown, Table, Typography } from "antd";
-import { ColumnsType } from "antd/es/table";
-import { Project } from "../../../../app/entities/Project";
-import { AiOutlineEdit, AiOutlineMore } from "react-icons/ai";
-import { CiTrash } from "react-icons/ci";
-import { useProjectsTable } from "./useProjectsTable";
-import { Modal } from "../../Modal";
-import { RemoveModal } from "../../Modal/RemoveModal";
-import { formatCurrency } from "../../../../app/utils/format/formatCurrency";
-import { Link } from "react-router-dom";
+import { Dropdown, Table, Typography } from 'antd';
+import { ColumnsType } from 'antd/es/table';
+import { AiOutlineEdit, AiOutlineMore } from 'react-icons/ai';
+import { CiTrash } from 'react-icons/ci';
+import { Link } from 'react-router-dom';
+
+import { Project } from '../../../../app/entities/Project';
+import { formatCurrency } from '../../../../app/utils/format/formatCurrency';
+import { Modal } from '../../Modal';
+
+import { useProjectsTable } from './useProjectsTable';
 
 export function ProjectsTable() {
   const {
@@ -28,73 +29,65 @@ export function ProjectsTable() {
 
   const COLUMNS: ColumnsType<Project> = [
     {
-      title: "Título",
-      dataIndex: "title",
-      key: "title",
+      title: 'Título',
+      dataIndex: 'title',
+      key: 'title',
       render: (value: string, project: Project) => (
         <Link to={`/projects/${project.id}`}>{value}</Link>
       ),
     },
     {
-      title: "Cliente",
-      dataIndex: "cliente",
-      key: "cliente",
-      render: (_: string, project: Project) => {
-        return (
-          <Typography>
-            {project.client.firstName} {project.client.lastName}
-          </Typography>
-        );
-      },
+      title: 'Cliente',
+      dataIndex: 'cliente',
+      key: 'cliente',
+      render: (_: string, project: Project) => (
+        <Typography>
+          {project.client.firstName} {project.client.lastName}
+        </Typography>
+      ),
     },
     {
-      title: "Valor",
-      dataIndex: "value",
-      key: "value",
-      render: (value: number) => {
-        return `R$ ${formatCurrency(value)}`;
-      },
+      title: 'Valor',
+      dataIndex: 'value',
+      key: 'value',
+      render: (value: number) => `R$ ${formatCurrency(value)}`,
     },
     {
-      title: "Atividades",
-      dataIndex: "activities",
-      key: "activities",
-      render: (_: string, project: Project) => {
-        return project.activities.length;
-      },
+      title: 'Atividades',
+      dataIndex: 'activities',
+      key: 'activities',
+      render: (_: string, project: Project) => project.activities.length,
     },
     {
-      title: "",
-      width: "4rem",
-      align: "center" as const,
-      render: (_: string, project: Project) => {
-        return (
-          <Dropdown
-            menu={{
-              items: [
-                {
-                  key: "edit",
-                  label: "Editar",
-                  icon: <AiOutlineEdit size={18} />,
-                  onClick: () => {
-                    handleProjectToUpdate(project);
-                  },
+      title: '',
+      width: '4rem',
+      align: 'center' as const,
+      render: (_: string, project: Project) => (
+        <Dropdown
+          menu={{
+            items: [
+              {
+                key: 'edit',
+                label: 'Editar',
+                icon: <AiOutlineEdit size={18} />,
+                onClick: () => {
+                  handleProjectToUpdate(project);
                 },
-                {
-                  key: "remove",
-                  label: "Remover",
-                  icon: <CiTrash size={18} />,
-                  onClick: () => {
-                    handleProjectToDelete(project);
-                  },
+              },
+              {
+                key: 'remove',
+                label: 'Remover',
+                icon: <CiTrash size={18} />,
+                onClick: () => {
+                  handleProjectToDelete(project);
                 },
-              ],
-            }}
-          >
-            <AiOutlineMore />
-          </Dropdown>
-        );
-      },
+              },
+            ],
+          }}
+        >
+          <AiOutlineMore />
+        </Dropdown>
+      ),
     },
   ];
 
@@ -124,16 +117,16 @@ export function ProjectsTable() {
         onClose={handleCloseUpdateProjectModal}
         formProps={{
           initialValues: {
-            clientId: selectedProjectsToUpdate?.client.id ?? "",
-            estimatedDate: selectedProjectsToUpdate?.estimatedDate ?? "",
-            id: selectedProjectsToUpdate?.id ?? "",
-            title: selectedProjectsToUpdate?.title ?? "",
+            clientId: selectedProjectsToUpdate?.client.id ?? '',
+            estimatedDate: selectedProjectsToUpdate?.estimatedDate ?? '',
+            id: selectedProjectsToUpdate?.id ?? '',
+            title: selectedProjectsToUpdate?.title ?? '',
             value: selectedProjectsToUpdate?.value ?? 0,
             activities: selectedProjectsToUpdate?.activities ?? [],
           },
         }}
       />
-      <RemoveModal
+      <Modal.Confirm
         isOpen={isDeleteModalOpen}
         isLoading={isDeleteLoading}
         message={`Deseja realmente remover o projeto ${selectedProjectsToDelete?.title}`}
