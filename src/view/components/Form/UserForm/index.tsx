@@ -2,18 +2,23 @@ import { Button, Form, Input } from 'antd';
 
 import { CustomInput } from '../../CustomInput';
 
-import { useUserForm } from './useUserForm';
+import { UserFormType, useUserForm } from './useUserForm';
 
 export interface UserFormProps {
   onCancel?: () => void;
-  // initialValues?: ClientFormType;
+  initialValues?: UserFormType;
 }
 
-export function UserForm({ onCancel }: UserFormProps) {
-  const { handleSubmit, isCreateLoadingUser } = useUserForm(onCancel);
+export function UserForm({ onCancel, initialValues }: UserFormProps) {
+  const { handleSubmit, isLoading } = useUserForm(initialValues?.id, onCancel);
 
   return (
-    <Form layout="vertical" preserve={false} onFinish={handleSubmit}>
+    <Form
+      layout="vertical"
+      preserve={false}
+      onFinish={handleSubmit}
+      initialValues={initialValues}
+    >
       <Form.Item
         label="Nome"
         name="name"
@@ -36,9 +41,17 @@ export function UserForm({ onCancel }: UserFormProps) {
         <CustomInput.CpfCnpj />
       </Form.Item>
 
+      <Form.Item
+        label="Telefone"
+        name="telephone"
+        rules={[{ required: true, message: 'Telefone é obrigatório' }]}
+      >
+        <CustomInput.Telephone />
+      </Form.Item>
+
       <div className="flex gap-4 justify-end">
         <Button onClick={onCancel}>Cancelar</Button>
-        <Button loading={isCreateLoadingUser} htmlType="submit" type="primary">
+        <Button loading={isLoading} htmlType="submit" type="primary">
           Salvar
         </Button>
       </div>

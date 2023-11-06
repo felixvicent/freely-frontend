@@ -39,7 +39,7 @@ export function ActivitiesDraggable({
           </Button>
         }
       />
-      <Modal.Remove
+      <Modal.Confirm
         message={`Deseja realmente remover a atividade ${activity.title}`}
         isLoading={isLoading}
         isOpen={isDeleteModalOpen}

@@ -1,8 +1,9 @@
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 
-import { FetchCreateUserBody } from '../../../../app/api/users/post';
+import { FetchCreateUserPayload } from '../../../../app/api/users/post';
 import { useFetchCreateUser } from '../../../../app/hooks/api/users/useFetchCreateUser';
+import { useFetchUpdateUser } from '../../../../app/hooks/api/users/useFetchUpdateUser';
 import { apiException } from '../../../../app/services/httpClient';
 
 export interface UserFormType {
@@ -10,22 +11,30 @@ export interface UserFormType {
   name: string;
   email: string;
   document: string;
+  telephone: string;
 }
 
-export function useUserForm(onFinish?: () => void) {
-  const { mutateAsync: createClient, isLoading: isCreateLoadingUser } =
+export function useUserForm(userId?: string, onFinish?: () => void) {
+  const { mutateAsync: createUser, isLoading: isCreateLoadingUser } =
     useFetchCreateUser();
+  const { mutateAsync: updateUser, isLoading: isUpdateLoadingUser } =
+    useFetchUpdateUser();
 
   const queryClient = useQueryClient();
 
   async function handleSubmit(formData: UserFormType) {
-    const payload: FetchCreateUserBody = {
+    const payload: FetchCreateUserPayload['body'] = {
       name: formData.name,
       email: formData.email,
       document: formData.document,
+      telephone: formData.telephone,
     };
     try {
-      await createClient(payload);
+      if (userId) {
+        await updateUser({ body: payload, path: { id: userId } });
+      } else {
+        await createUser({ body: payload });
+      }
 
       queryClient.invalidateQueries({ queryKey: ['users'] });
 
@@ -35,5 +44,8 @@ export function useUserForm(onFinish?: () => void) {
     }
   }
 
-  return { isCreateLoadingUser, handleSubmit };
+  return {
+    isLoading: isCreateLoadingUser || isUpdateLoadingUser,
+    handleSubmit,
+  };
 }

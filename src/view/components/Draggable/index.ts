@@ -1,4 +1,4 @@
-import { ActivitiesDraggable } from "./ActivitiesDraggable";
+import { ActivitiesDraggable } from './ActivitiesDraggable';
 
 export const Draggable = {
   Activities: ActivitiesDraggable,

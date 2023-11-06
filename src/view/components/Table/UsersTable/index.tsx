@@ -27,6 +27,10 @@ export function UsersTable() {
     handleCloseToggleActiveModal,
     toggleActive,
     handleOpenToggleActiveModal,
+    selectedUserToUpdate,
+    handleCloseEditUserModal,
+    handleCloseRemoveUserModal,
+    selectedUserToDelete,
   } = useUsersTable();
 
   const COLUMNS: ColumnsType<User> = [
@@ -155,6 +159,30 @@ export function UsersTable() {
         title={`${selectedUserToToggleActive?.active ? 'Desativar' : 'Ativar'
           // eslint-disable-next-line prettier/prettier
           } usuário`}
+      />
+
+      <Modal.Confirm
+        isLoading={isToggleActiveLoading}
+        isOpen={!!selectedUserToDelete}
+        message={`Deseja realmente remover o usuário ${selectedUserToDelete?.name} e todos os seus dados?`}
+        onClose={handleCloseRemoveUserModal}
+        onSubmit={toggleActive}
+        title={`Removendo usuário o usuário ${selectedUserToDelete?.name}`}
+      />
+
+      <Modal.UserForm
+        isOpen={!!selectedUserToUpdate}
+        onClose={handleCloseEditUserModal}
+        title="Editando usuário"
+        formProps={{
+          initialValues: {
+            id: selectedUserToUpdate?.id ?? '',
+            name: selectedUserToUpdate?.name ?? '',
+            email: selectedUserToUpdate?.email ?? '',
+            document: selectedUserToUpdate?.document ?? '',
+            telephone: selectedUserToUpdate?.telephone ?? '',
+          },
+        }}
       />
     </>
   );

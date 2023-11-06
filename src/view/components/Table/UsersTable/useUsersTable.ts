@@ -82,8 +82,16 @@ export function useUsersTable() {
     setSelectedUserToUpdate(user);
   }
 
+  function handleCloseEditUserModal() {
+    setSelectedUserToUpdate(undefined);
+  }
+
   function handleOpenRemoveUserModal(user: User) {
     setSelectedUserToDelete(user);
+  }
+
+  function handleCloseRemoveUserModal() {
+    setSelectedUserToDelete(undefined);
   }
 
   function handleCloseToggleActiveModal() {
@@ -125,5 +133,7 @@ export function useUsersTable() {
     selectedUserToToggleActive,
     handleCloseToggleActiveModal,
     handleOpenToggleActiveModal,
+    handleCloseEditUserModal,
+    handleCloseRemoveUserModal,
   };
 }
