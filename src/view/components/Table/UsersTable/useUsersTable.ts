@@ -13,6 +13,7 @@ export function useUsersTable() {
     size: 10,
     sort: 'name,asc',
     usersIds: [],
+    status: undefined,
   });
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
@@ -20,6 +21,7 @@ export function useUsersTable() {
   const [selectedUserToDelete, setSelectedUserToDelete] = useState<User>();
   const [selectedUserToToggleActive, setSelectedUserToToggleActive] =
     useState<User>();
+  const [selectedStatus, setSelectedStatus] = useState<boolean>();
 
   const queryClient = useQueryClient();
 
@@ -53,18 +55,24 @@ export function useUsersTable() {
   }
 
   function confirmFilter() {
-    setUserParams((prevState) => ({ ...prevState, usersIds: selectedUsers }));
+    setUserParams((prevState) => ({
+      ...prevState,
+      usersIds: selectedUsers,
+      status: selectedStatus,
+    }));
   }
 
   function resetFilter() {
     setSearchTerm('');
     setSelectedUsers([]);
+    setSelectedStatus(undefined);
     confirmFilter();
     setUserParams({
       page: 0,
       size: 10,
       sort: 'name,asc',
       usersIds: [],
+      status: undefined,
     });
   }
 
@@ -102,6 +110,10 @@ export function useUsersTable() {
     setSelectedUserToToggleActive(user);
   }
 
+  function handleSelectStatus(status: boolean) {
+    setSelectedStatus(status);
+  }
+
   useEffect(() => {
     refetchUsersSuggestion();
   }, [searchTerm, refetchUsersSuggestion]);
@@ -135,5 +147,7 @@ export function useUsersTable() {
     handleOpenToggleActiveModal,
     handleCloseEditUserModal,
     handleCloseRemoveUserModal,
+    selectedStatus,
+    handleSelectStatus,
   };
 }

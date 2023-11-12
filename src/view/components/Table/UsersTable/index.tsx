@@ -11,6 +11,7 @@ import { CiTrash } from 'react-icons/ci';
 import { User } from '../../../../app/entities/User';
 import { Modal } from '../../Modal';
 
+import { StatusFilter } from './StatusFilter';
 import { UsersFilter } from './UsersFilter';
 import { useUsersTable } from './useUsersTable';
 
@@ -69,6 +70,7 @@ export function UsersTable() {
       render: (value: boolean) => (
         <Tag color={value ? 'green' : 'red'}>{value ? 'Ativo' : 'Inativo'}</Tag>
       ),
+      filterDropdown: () => <StatusFilter />,
     },
     {
       title: 'Email',

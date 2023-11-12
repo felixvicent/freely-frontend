@@ -7,6 +7,7 @@ export interface UserParams {
   size?: number;
   sort?: string;
   usersIds?: string[];
+  status?: boolean;
 }
 interface FetchListUsersPayload {
   params: UserParams;
