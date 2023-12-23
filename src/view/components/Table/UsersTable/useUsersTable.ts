@@ -3,6 +3,7 @@ import { useQueryClient } from 'react-query';
 
 import { UserParams } from '../../../../app/api/users/get';
 import { User } from '../../../../app/entities/User';
+import { useFetchDeleteUser } from '../../../../app/hooks/api/users/useFetchDeleteUser';
 import { useFetchListUsers } from '../../../../app/hooks/api/users/useFetchListUsers';
 import { useFetchSuggestionUsers } from '../../../../app/hooks/api/users/useFetchSuggestionUsers';
 import { useFetchToggleUserActive } from '../../../../app/hooks/api/users/useFetchToggleUserActive';
@@ -37,6 +38,8 @@ export function useUsersTable() {
   } = useFetchSuggestionUsers(searchTerm);
   const { isLoading: isToggleActiveLoading, mutateAsync: fetchToggleActive } =
     useFetchToggleUserActive();
+  const { isLoading: isDeleteUserLoading, mutateAsync: fetchDeleteUser } =
+    useFetchDeleteUser();
 
   async function toggleActive() {
     if (!selectedUserToToggleActive) return;
@@ -48,6 +51,16 @@ export function useUsersTable() {
     queryClient.invalidateQueries({ queryKey: ['users'] });
 
     setSelectedUserToToggleActive(undefined);
+  }
+
+  async function deleteUser() {
+    if (!selectedUserToDelete) return;
+
+    fetchDeleteUser({ path: { id: selectedUserToDelete?.id } });
+
+    queryClient.invalidateQueries({ queryKey: ['users'] });
+
+    setSelectedUserToDelete(undefined);
   }
 
   function handleChangeTerm(text: string) {
@@ -149,5 +162,7 @@ export function useUsersTable() {
     handleCloseRemoveUserModal,
     selectedStatus,
     handleSelectStatus,
+    deleteUser,
+    isDeleteUserLoading,
   };
 }
