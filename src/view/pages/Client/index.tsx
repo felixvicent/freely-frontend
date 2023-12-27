@@ -88,7 +88,7 @@ export function Client() {
             </Card>
           </Col>
           <Col span={8}>
-            <Card size="small" title="Endereço" className="-hull">
+            <Card size="small" title="Endereço" className="h-full">
               <div className="flex flex-col text-xs">
                 <span>
                   <strong>Endereço:</strong> {client?.address.street},{' '}
@@ -99,7 +99,9 @@ export function Client() {
                   {client?.address.zipCode}
                 </span>
                 <span>
-                  {client?.address.complement}, {client?.address.reference}
+                  {client?.address.complement}
+                  {client?.address.complement && ','}{' '}
+                  {client?.address.reference}
                 </span>
               </div>
             </Card>

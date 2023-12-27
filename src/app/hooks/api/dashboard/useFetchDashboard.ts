@@ -1,11 +1,15 @@
-import { useQuery } from "react-query";
-import { fetchDashboard } from "../../../api/dashboard/get";
+import { useQuery } from 'react-query';
 
-export function useFetchDashboard() {
+import {
+  FetchDashboardRevenuePayload,
+  fetchDashboardRevenue,
+} from '../../../api/dashboard/revenue/get';
+
+export function useFetchDashboardRevenue(params: FetchDashboardRevenuePayload) {
   const { data, isFetching, refetch } = useQuery({
-    queryKey: ["dashboard"],
-    queryFn: () => fetchDashboard(),
+    queryKey: ['dashboard'],
+    queryFn: () => fetchDashboardRevenue(params),
   });
 
-  return { dashboard: data, isFetching, refetch };
+  return { revenue: data, isFetching, refetch };
 }
