@@ -1,13 +1,19 @@
-import { Card, Col, DatePicker, Row, Spin, Typography } from 'antd';
+import { Col, DatePicker, Row } from 'antd';
 import { Dayjs } from 'dayjs';
-import { FiDollarSign } from 'react-icons/fi';
+import { FiDollarSign, FiUsers } from 'react-icons/fi';
 
-import { formatCurrency } from '../../../app/utils/format/formatCurrency';
-
+import { StatsCard } from './components/StatsCard';
 import { useHome } from './useHome';
 
 export function Home() {
-  const { revenue, isFetching, period, handleChangePeriod } = useHome();
+  const {
+    revenue,
+    clients,
+    isClientsLoading,
+    isRevenueLoading,
+    period,
+    handleChangePeriod,
+  } = useHome();
 
   return (
     <main>
@@ -20,27 +26,27 @@ export function Home() {
             }
           }}
           format="DD/MM/YYYY"
+          allowClear={false}
         />
       </div>
 
       <Row gutter={16}>
         <Col span={6}>
-          <Card
-            size="small"
+          <StatsCard
+            icon={<FiDollarSign />}
+            isLoading={isRevenueLoading}
+            value={revenue}
             title="Receita"
-            extra={<FiDollarSign />}
-            bodyStyle={{ padding: '0 12px', height: '100%' }}
-          >
-            <div className="h-20 flex items-center justify-center">
-              {isFetching ? (
-                <Spin />
-              ) : (
-                <Typography className="font-bold text-2xl">
-                  R$ {formatCurrency(revenue)}
-                </Typography>
-              )}
-            </div>
-          </Card>
+            currency
+          />
+        </Col>
+        <Col span={6}>
+          <StatsCard
+            icon={<FiUsers />}
+            isLoading={isClientsLoading}
+            value={clients}
+            title="Clientes"
+          />
         </Col>
       </Row>
     </main>

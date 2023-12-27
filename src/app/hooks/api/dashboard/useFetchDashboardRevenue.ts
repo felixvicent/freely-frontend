@@ -7,7 +7,7 @@ import {
 
 export function useFetchDashboardRevenue(params: FetchDashboardRevenuePayload) {
   const { data, isFetching, refetch } = useQuery({
-    queryKey: ['dashboard'],
+    queryKey: ['dashboard', 'revenue'],
     queryFn: () => fetchDashboardRevenue(params),
   });
 
