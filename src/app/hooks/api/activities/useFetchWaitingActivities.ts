@@ -1,12 +1,13 @@
-import { useQuery } from "react-query";
-import { fetchActivities } from "../../../api/activities/get";
-import { ActivityStatus } from "../../../entities/AcitivtyStatus";
+import { useQuery } from 'react-query';
 
-export function useFetchWaitingActivities() {
+import { fetchActivities } from '../../../api/activities/get';
+import { ActivityStatus } from '../../../entities/AcitivtyStatus';
+
+export function useFetchWaitingActivities(projectId: string) {
   const { data, isFetching } = useQuery({
-    queryKey: ["waiting-activities"],
+    queryKey: ['waiting-activities'],
     queryFn: () =>
-      fetchActivities({ params: { status: ActivityStatus.WAITING } }),
+      fetchActivities({ status: ActivityStatus.WAITING, projectId }),
   });
 
   return { waitingActivities: data, isFetching };

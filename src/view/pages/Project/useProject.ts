@@ -1,14 +1,19 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useFetchProjectDetails } from "../../../app/hooks/api/projects/useFetchProjectDetails";
-import { useFetchDeleteProject } from "../../../app/hooks/api/projects/useFetchDeleteProject";
-import { useState } from "react";
-import toast from "react-hot-toast";
-import { apiException } from "../../../app/services/httpClient";
-import { useFetchDeleteActivity } from "../../../app/hooks/api/activities/useFetchDeleteActivity";
-import { Activity } from "../../../app/entities/Activity";
-import { useQueryClient } from "react-query";
-import { ActivityStatus } from "../../../app/entities/AcitivtyStatus";
-import { useFetchUpdateActivity } from "../../../app/hooks/api/activities/useFetchUpdateActivities";
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useQueryClient } from 'react-query';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { ActivityStatus } from '../../../app/entities/AcitivtyStatus';
+import { Activity } from '../../../app/entities/Activity';
+import { useFetchDeleteActivity } from '../../../app/hooks/api/activities/useFetchDeleteActivity';
+import { useFetchDoneActivities } from '../../../app/hooks/api/activities/useFetchDoneActivities';
+import { useFetchPendingActivities } from '../../../app/hooks/api/activities/useFetchPendingActivities';
+import { useFetchProgressActivities } from '../../../app/hooks/api/activities/useFetchProgressActivities';
+import { useFetchUpdateActivity } from '../../../app/hooks/api/activities/useFetchUpdateActivities';
+import { useFetchWaitingActivities } from '../../../app/hooks/api/activities/useFetchWaitingActivities';
+import { useFetchDeleteProject } from '../../../app/hooks/api/projects/useFetchDeleteProject';
+import { useFetchProjectDetails } from '../../../app/hooks/api/projects/useFetchProjectDetails';
+import { apiException } from '../../../app/services/httpClient';
 
 export function useProject() {
   const { projectId } = useParams();
@@ -26,7 +31,15 @@ export function useProject() {
     Activity | undefined
   >();
 
-  const { isFetching, project } = useFetchProjectDetails(projectId ?? "");
+  const { isFetching, project } = useFetchProjectDetails(projectId ?? '');
+
+  const { pendingActivities } = useFetchPendingActivities(projectId ?? '');
+
+  const { waitingActivities } = useFetchWaitingActivities(projectId ?? '');
+
+  const { progressActivities } = useFetchProgressActivities(projectId ?? '');
+
+  const { doneActivities } = useFetchDoneActivities(projectId ?? '');
 
   const { isLoading, mutateAsync: removeProject } = useFetchDeleteProject();
 
@@ -70,11 +83,10 @@ export function useProject() {
 
   async function handleRemove() {
     try {
-      await removeProject({ path: { id: projectId ?? "" } });
+      await removeProject({ path: { id: projectId ?? '' } });
 
-      navigate("/projects");
+      navigate('/projects');
     } catch (error) {
-      console.log(error);
       toast.error(apiException(error).message);
     }
   }
@@ -82,10 +94,10 @@ export function useProject() {
   async function handleRemoveActivity() {
     try {
       await removeActivity({
-        path: { id: selectedActivityToDelete?.id ?? "" },
+        path: { id: selectedActivityToDelete?.id ?? '' },
       });
 
-      queryClient.invalidateQueries({ queryKey: ["project-details"] });
+      queryClient.invalidateQueries({ queryKey: ['project-details'] });
 
       handleCloseDeleteActivityModal();
     } catch (error) {
@@ -96,15 +108,15 @@ export function useProject() {
   async function handleUpdateActivity(
     status: ActivityStatus,
     title: string,
-    activityId: string
+    activityId: string,
   ) {
     try {
       await updateActivity({
         path: { id: activityId },
-        body: { projectId: projectId ?? "", title, status },
+        body: { projectId: projectId ?? '', title, status },
       });
 
-      queryClient.invalidateQueries({ queryKey: ["project-details"] });
+      queryClient.invalidateQueries({ queryKey: ['project-details'] });
     } catch (error) {
       toast.error(apiException(error).message);
     }
@@ -133,5 +145,9 @@ export function useProject() {
     isDeleteActivityModalOpen: !!selectedActivityToDelete,
     selectedActivityToDelete,
     handleUpdateActivity,
+    pendingActivities,
+    waitingActivities,
+    progressActivities,
+    doneActivities,
   };
 }

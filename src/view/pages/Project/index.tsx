@@ -30,6 +30,10 @@ export function Project() {
     handleCloseDeleteActivityModal,
     isDeleteActivityModalOpen,
     selectedActivityToDelete,
+    pendingActivities,
+    waitingActivities,
+    progressActivities,
+    doneActivities,
   } = useProject();
 
   return (
@@ -106,10 +110,7 @@ export function Project() {
                     <Col span={6}>
                       <Drop.Activities
                         projectId={project?.id ?? ''}
-                        activities={project?.activities.filter(
-                          (activity) =>
-                            activity.status === ActivityStatus.PENDING,
-                        )}
+                        activities={pendingActivities}
                         isLoading={isLoading}
                         status={ActivityStatus.PENDING}
                         title="Pendentes"
@@ -118,36 +119,28 @@ export function Project() {
                     <Col span={6}>
                       <Drop.Activities
                         projectId={project?.id ?? ''}
-                        activities={project?.activities.filter(
-                          (activity) =>
-                            activity.status === ActivityStatus.WAITING,
-                        )}
+                        activities={waitingActivities}
                         isLoading={isLoading}
                         status={ActivityStatus.WAITING}
-                        title="Pendentes"
+                        title="Esperando"
                       />
                     </Col>
                     <Col span={6}>
                       <Drop.Activities
                         projectId={project?.id ?? ''}
-                        activities={project?.activities.filter(
-                          (activity) =>
-                            activity.status === ActivityStatus.PROGRESS,
-                        )}
+                        activities={progressActivities}
                         isLoading={isLoading}
                         status={ActivityStatus.PROGRESS}
-                        title="Pendentes"
+                        title="Em andamento"
                       />
                     </Col>
                     <Col span={6}>
                       <Drop.Activities
                         projectId={project?.id ?? ''}
-                        activities={project?.activities.filter(
-                          (activity) => activity.status === ActivityStatus.DONE,
-                        )}
+                        activities={doneActivities}
                         isLoading={isLoading}
                         status={ActivityStatus.DONE}
-                        title="Pendentes"
+                        title="Finalizadas"
                       />
                     </Col>
                   </Row>

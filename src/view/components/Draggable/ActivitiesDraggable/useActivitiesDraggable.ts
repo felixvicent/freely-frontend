@@ -22,6 +22,21 @@ export function useActivitiesDraggable(activity: Activity, projectId: string) {
     await deleteActivity({ path: { id: activityId } });
   }
 
+  function getQueryToInvalidate(status: ActivityStatus) {
+    switch (status) {
+      case ActivityStatus.PENDING:
+        return 'pending-activities';
+      case ActivityStatus.DONE:
+        return 'done-activities';
+      case ActivityStatus.PROGRESS:
+        return 'progress-activities';
+      case ActivityStatus.WAITING:
+        return 'waiting-activities';
+      default:
+        return '';
+    }
+  }
+
   const [_, drag] = useDrag(
     () => ({
       type: 'box',
@@ -38,7 +53,24 @@ export function useActivitiesDraggable(activity: Activity, projectId: string) {
             },
           })
             .then(() => {
-              queryClient.invalidateQueries({ queryKey: ['project-details'] });
+              queryClient.invalidateQueries({
+                queryKey: [
+                  getQueryToInvalidate(
+                    ActivityStatus[
+                      activity.status as keyof typeof ActivityStatus
+                    ],
+                  ),
+                ],
+              });
+              queryClient.invalidateQueries({
+                queryKey: [
+                  getQueryToInvalidate(
+                    ActivityStatus[
+                      dropResult.status as keyof typeof ActivityStatus
+                    ],
+                  ),
+                ],
+              });
             })
             .catch((error) => {
               toast.error(apiException(error).message);
