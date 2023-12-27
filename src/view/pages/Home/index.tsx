@@ -2,6 +2,7 @@ import { Col, DatePicker, Row } from 'antd';
 import { Dayjs } from 'dayjs';
 import { AiOutlineProject } from 'react-icons/ai';
 import { FiDollarSign, FiUsers } from 'react-icons/fi';
+import { MdOutlineTask } from 'react-icons/md';
 
 import { StatsCard } from './components/StatsCard';
 import { useHome } from './useHome';
@@ -11,9 +12,11 @@ export function Home() {
     revenue,
     clients,
     projects,
+    activities,
     isClientsLoading,
     isRevenueLoading,
     isProjectLoading,
+    isActivitiesLoading,
     period,
     handleChangePeriod,
   } = useHome();
@@ -58,6 +61,14 @@ export function Home() {
             isLoading={isProjectLoading}
             value={projects}
             title="Projects"
+          />
+        </Col>
+        <Col span={6}>
+          <StatsCard
+            icon={<MdOutlineTask />}
+            isLoading={isActivitiesLoading}
+            value={activities}
+            title="Atividades"
           />
         </Col>
       </Row>

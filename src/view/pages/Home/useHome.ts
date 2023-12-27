@@ -1,6 +1,7 @@
 import { Dayjs } from 'dayjs';
 import { useEffect, useState } from 'react';
 
+import { useFetchDashboardAcitivities } from '../../../app/hooks/api/dashboard/useFetchDashboardActivities';
 import { useFetchDashboardClients } from '../../../app/hooks/api/dashboard/useFetchDashboardClients';
 import { useFetchDashboardProjects } from '../../../app/hooks/api/dashboard/useFetchDashboardProjects';
 import { useFetchDashboardRevenue } from '../../../app/hooks/api/dashboard/useFetchDashboardRevenue';
@@ -34,6 +35,12 @@ export function useHome() {
     refetch: refetchProjects,
   } = useFetchDashboardProjects(params);
 
+  const {
+    isFetching: isActivitiesLoading,
+    activities,
+    refetch: refetchActivities,
+  } = useFetchDashboardAcitivities(params);
+
   function handleChangePeriod(startDate: Dayjs | null, endDate: Dayjs | null) {
     setPeriod([startDate, endDate]);
   }
@@ -42,15 +49,24 @@ export function useHome() {
     refetchClients();
     refetchRevenue();
     refetchProjects();
-  }, [period, refetchClients, refetchRevenue, refetchProjects]);
+    refetchActivities();
+  }, [
+    period,
+    refetchClients,
+    refetchRevenue,
+    refetchProjects,
+    refetchActivities,
+  ]);
 
   return {
     revenue,
     clients,
     projects,
+    activities,
     isClientsLoading,
     isRevenueLoading,
     isProjectLoading,
+    isActivitiesLoading,
     period,
     handleChangePeriod,
   };
