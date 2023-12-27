@@ -1,16 +1,16 @@
 import { apiException, httpClient } from '../../../services/httpClient';
 
-export interface FetchDashboardRevenuePayload {
+export interface FetchDashboardProjectsPayload {
   periodStart?: string;
   periodEnd?: string;
 }
 
-export async function fetchDashboardRevenue({
+export async function fetchDashboardProjects({
   periodEnd,
   periodStart,
-}: FetchDashboardRevenuePayload) {
+}: FetchDashboardProjectsPayload) {
   try {
-    const { data } = await httpClient.get<number>('/dashboard/revenue', {
+    const { data } = await httpClient.get<number>('/dashboard/projects', {
       params: { periodStart, periodEnd },
     });
 

@@ -1,5 +1,6 @@
 import { Col, DatePicker, Row } from 'antd';
 import { Dayjs } from 'dayjs';
+import { AiOutlineProject } from 'react-icons/ai';
 import { FiDollarSign, FiUsers } from 'react-icons/fi';
 
 import { StatsCard } from './components/StatsCard';
@@ -9,8 +10,10 @@ export function Home() {
   const {
     revenue,
     clients,
+    projects,
     isClientsLoading,
     isRevenueLoading,
+    isProjectLoading,
     period,
     handleChangePeriod,
   } = useHome();
@@ -21,9 +24,10 @@ export function Home() {
         <DatePicker.RangePicker
           defaultValue={[period[0], period[1]]}
           onChange={(dates: [Dayjs | null, Dayjs | null] | null) => {
-            if (dates) {
-              handleChangePeriod(dates[0], dates[1]);
-            }
+            handleChangePeriod(
+              dates ? dates[0] : null,
+              dates ? dates[1] : null,
+            );
           }}
           format="DD/MM/YYYY"
           allowClear={false}
@@ -46,6 +50,14 @@ export function Home() {
             isLoading={isClientsLoading}
             value={clients}
             title="Clientes"
+          />
+        </Col>
+        <Col span={6}>
+          <StatsCard
+            icon={<AiOutlineProject />}
+            isLoading={isProjectLoading}
+            value={projects}
+            title="Projects"
           />
         </Col>
       </Row>
