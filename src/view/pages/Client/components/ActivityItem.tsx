@@ -1,9 +1,10 @@
-import { MdCheck, MdPendingActions } from "react-icons/md";
-import { ActivityStatus } from "../../../../app/entities/AcitivtyStatus";
-import { TbProgress } from "react-icons/tb";
-import { IoMdTime } from "react-icons/io";
-import { Tooltip } from "antd";
-import { getLabelByStatus } from "../../../../app/utils/labels/getLabelByStatus";
+import { Tooltip } from 'antd';
+import { IoMdTime } from 'react-icons/io';
+import { MdCheck, MdPendingActions } from 'react-icons/md';
+import { TbProgress } from 'react-icons/tb';
+
+import { ActivityStatus } from '../../../../app/entities/AcitivtyStatus';
+import { getActivityLabelByStatus } from '../../../../app/utils/labels/getActivityLabelByStatus';
 
 interface ActivityItemProps {
   status: ActivityStatus;
@@ -21,11 +22,13 @@ export function ActivityItem({ status, activity }: ActivityItemProps) {
         return <TbProgress className="text-purple-400" />;
       case ActivityStatus.WAITING:
         return <IoMdTime className="text-blue-400" />;
+      default:
+        return null;
     }
   }
 
   return (
-    <Tooltip title={getLabelByStatus(status)} placement="topLeft">
+    <Tooltip title={getActivityLabelByStatus(status)} placement="topLeft">
       <span className="flex items-center gap-1">
         {getIconByStatus(status)}
         {activity}

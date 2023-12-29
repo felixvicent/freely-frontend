@@ -1,7 +1,9 @@
-import { Button } from "antd";
-import { useProjects } from "./useProjects";
-import { Table } from "../../components/Table";
-import { Modal } from "../../components/Modal";
+import { Button } from 'antd';
+
+import { Modal } from '../../components/Modal';
+import { Table } from '../../components/Table';
+
+import { useProjects } from './useProjects';
 
 export function Projects() {
   const {

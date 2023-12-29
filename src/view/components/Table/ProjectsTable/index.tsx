@@ -5,7 +5,9 @@ import { CiTrash } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
 
 import { Project } from '../../../../app/entities/Project';
+import { ProjectStatus } from '../../../../app/entities/ProjectStatus';
 import { formatCurrency } from '../../../../app/utils/format/formatCurrency';
+import { getProjectLabelByStatus } from '../../../../app/utils/labels/getProjectLabelByStatus';
 import { Modal } from '../../Modal';
 
 import { useProjectsTable } from './useProjectsTable';
@@ -51,6 +53,12 @@ export function ProjectsTable() {
       dataIndex: 'value',
       key: 'value',
       render: (value: number) => `R$ ${formatCurrency(value)}`,
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      render: (status: ProjectStatus) => getProjectLabelByStatus(status),
     },
     {
       title: 'Atividades',

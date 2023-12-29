@@ -1,5 +1,6 @@
-import { Activity } from "./Activity";
-import { ClientList } from "./ClientList";
+import { Activity } from './Activity';
+import { ClientList } from './ClientList';
+import { ProjectStatus } from './ProjectStatus';
 
 export type Project = {
   id: string;
@@ -9,4 +10,5 @@ export type Project = {
   estimatedDate: string;
   createdAt: string;
   activities: Activity[];
+  status: ProjectStatus;
 };

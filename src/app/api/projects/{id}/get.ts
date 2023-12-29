@@ -1,5 +1,5 @@
-import { Project } from "../../../entities/Project";
-import { apiException, httpClient } from "../../../services/httpClient";
+import { Project } from '../../../entities/Project';
+import { apiException, httpClient } from '../../../services/httpClient';
 
 interface FetchProjectDetailsPayload {
   path: {
@@ -11,7 +11,9 @@ export async function fetchProjectDetails({
   path,
 }: FetchProjectDetailsPayload) {
   try {
-    const { data } = await httpClient.get<Project>(`/projects/${path.projectId}`);
+    const { data } = await httpClient.get<Project>(
+      `/projects/${path.projectId}`,
+    );
 
     return data;
   } catch (error) {

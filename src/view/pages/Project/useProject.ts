@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { ActivityStatus } from '../../../app/entities/AcitivtyStatus';
 import { Activity } from '../../../app/entities/Activity';
+import { ProjectStatus } from '../../../app/entities/ProjectStatus';
 import { useFetchDeleteActivity } from '../../../app/hooks/api/activities/useFetchDeleteActivity';
 import { useFetchDoneActivities } from '../../../app/hooks/api/activities/useFetchDoneActivities';
 import { useFetchPendingActivities } from '../../../app/hooks/api/activities/useFetchPendingActivities';
@@ -13,6 +14,7 @@ import { useFetchUpdateActivity } from '../../../app/hooks/api/activities/useFet
 import { useFetchWaitingActivities } from '../../../app/hooks/api/activities/useFetchWaitingActivities';
 import { useFetchDeleteProject } from '../../../app/hooks/api/projects/useFetchDeleteProject';
 import { useFetchProjectDetails } from '../../../app/hooks/api/projects/useFetchProjectDetails';
+import { useFetchUpdateProjectStatus } from '../../../app/hooks/api/projects/useFetchUpdateProjectStatus';
 import { apiException } from '../../../app/services/httpClient';
 
 export function useProject() {
@@ -48,6 +50,11 @@ export function useProject() {
 
   const { isLoading: isUpdateActivityLoading, mutateAsync: updateActivity } =
     useFetchUpdateActivity();
+
+  const {
+    isLoading: isUpdateProjectStatusLoading,
+    mutateAsync: updateProjectStatus,
+  } = useFetchUpdateProjectStatus();
 
   function handleCloseDeleteModal() {
     setIsDeleteProjectModalOpen(false);
@@ -113,7 +120,22 @@ export function useProject() {
     try {
       await updateActivity({
         path: { id: activityId },
-        body: { projectId: projectId ?? '', title, status },
+        body: { projectId: projectId ?? '', title, status, estimatedDate: '' },
+      });
+
+      queryClient.invalidateQueries({ queryKey: ['project-details'] });
+    } catch (error) {
+      toast.error(apiException(error).message);
+    }
+  }
+
+  async function handleUpdateProjectStatus(status: ProjectStatus) {
+    try {
+      await updateProjectStatus({
+        body: {
+          status,
+        },
+        path: { id: projectId ?? '' },
       });
 
       queryClient.invalidateQueries({ queryKey: ['project-details'] });
@@ -149,5 +171,7 @@ export function useProject() {
     waitingActivities,
     progressActivities,
     doneActivities,
+    isUpdateProjectStatusLoading,
+    handleUpdateProjectStatus,
   };
 }

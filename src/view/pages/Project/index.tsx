@@ -1,11 +1,14 @@
-import { Button, Card, Col, Row } from 'antd';
+import { Button, Card, Col, Dropdown, MenuProps, Row, Select } from 'antd';
 import dayjs from 'dayjs';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { AiOutlineMore } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
 import { ActivityStatus } from '../../../app/entities/AcitivtyStatus';
+import { ProjectStatus } from '../../../app/entities/ProjectStatus';
 import { formatCurrency } from '../../../app/utils/format/formatCurrency';
+import { getProjectLabelByStatus } from '../../../app/utils/labels/getProjectLabelByStatus';
 import { Container } from '../../components/Container';
 import { Drop } from '../../components/Drop';
 import { Modal } from '../../components/Modal';
@@ -34,7 +37,22 @@ export function Project() {
     waitingActivities,
     progressActivities,
     doneActivities,
+    isUpdateProjectStatusLoading,
+    handleUpdateProjectStatus,
   } = useProject();
+
+  const items: MenuProps['items'] = [
+    {
+      label: 'Editar',
+      onClick: handleOpenUpdateModal,
+      key: 'edit',
+    },
+    {
+      label: 'Remover',
+      onClick: handleOpenDeleteModal,
+      key: 'remove',
+    },
+  ];
 
   return (
     <main>
@@ -42,14 +60,25 @@ export function Project() {
         <header className="flex items-center justify-between my-4">
           <h3 className="mb-2">Projeto</h3>
           <div className="flex items-center gap-2">
-            <Button onClick={handleOpenUpdateModal}>Editar</Button>
-            <Button
-              onClick={handleOpenDeleteModal}
-              className="bg-red-500 hover:!bg-red-600"
-              type="primary"
-            >
-              Remover
-            </Button>
+            <Select
+              className="w-52 text-right"
+              value={project?.status}
+              loading={isUpdateProjectStatusLoading}
+              bordered={false}
+              options={Object.values(ProjectStatus).map((status) => ({
+                label: getProjectLabelByStatus(status),
+                value: status,
+              }))}
+              onChange={(value: ProjectStatus) =>
+                handleUpdateProjectStatus(value)
+              }
+            />
+
+            <Dropdown menu={{ items }} trigger={['click']}>
+              <Button type="link">
+                <AiOutlineMore />
+              </Button>
+            </Dropdown>
           </div>
         </header>
         <Row gutter={16} align="stretch">

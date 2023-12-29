@@ -50,6 +50,7 @@ export function useActivitiesDraggable(activity: Activity, projectId: string) {
               projectId,
               title: item.title,
               status: dropResult.status,
+              estimatedDate: '',
             },
           })
             .then(() => {
