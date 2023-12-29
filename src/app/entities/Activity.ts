@@ -1,4 +1,4 @@
-import { Project } from "./Project";
+import { Project } from './Project';
 
 export type Activity = {
   id: string;
@@ -6,4 +6,6 @@ export type Activity = {
   status: string;
   createdAt: string;
   project: Project;
+  estimatedDate: string;
+  finishedAt: string;
 };

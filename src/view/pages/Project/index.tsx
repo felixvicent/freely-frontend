@@ -177,7 +177,12 @@ export function Project() {
         isOpen={isCreateActivityModalOpen}
         onClose={handleCloseCreateActivityModal}
         title="Criando atividade"
-        formProps={{ initialValues: { projectId: project?.id ?? '' } }}
+        formProps={{
+          initialValues: {
+            projectId: project?.id ?? '',
+            projectEstimatedDate: project?.estimatedDate ?? '',
+          },
+        }}
       />
 
       <Modal.Confirm

@@ -5,5 +5,6 @@ export type ProjectForm = {
   estimatedDate: string;
   activities: {
     title: string;
+    estimatedDate: string;
   }[];
 };
