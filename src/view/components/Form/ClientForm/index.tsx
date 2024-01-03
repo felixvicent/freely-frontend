@@ -1,7 +1,9 @@
-import { Button, Col, Form, Input, Row } from "antd";
-import { CustomInput } from "../../CustomInput";
-import { Select } from "../../Select";
-import { ClientFormType, useClientForm } from "./useClientForm";
+import { Button, Col, Form, Input, Row } from 'antd';
+
+import { CustomInput } from '../../CustomInput';
+import { Select } from '../../Select';
+
+import { ClientFormType, useClientForm } from './useClientForm';
 
 export interface ClientFormProps {
   onCancel?: () => void;
@@ -11,7 +13,7 @@ export interface ClientFormProps {
 export function ClientForm({ onCancel, initialValues }: ClientFormProps) {
   const { handleSubmit, isLoading } = useClientForm(
     onCancel,
-    initialValues?.id
+    initialValues?.id,
   );
 
   return (
@@ -23,32 +25,29 @@ export function ClientForm({ onCancel, initialValues }: ClientFormProps) {
     >
       <Form.Item
         label="Nome"
-        name="firstName"
-        rules={[{ required: true, message: "Nome é obrigatório" }]}
+        name="name"
+        rules={[{ required: true, message: 'Nome é obrigatório' }]}
       >
-        <Input />
-      </Form.Item>
-      <Form.Item label="Sobrenome" name="lastName">
         <Input />
       </Form.Item>
       <Form.Item
         label="Email"
         name="email"
-        rules={[{ required: true, message: "email é obrigatório" }]}
+        rules={[{ required: true, message: 'email é obrigatório' }]}
       >
         <Input />
       </Form.Item>
       <Form.Item
         label="CPF ou CNPJ"
         name="document"
-        rules={[{ required: true, message: "CPF ou CNPJ é obrigatório" }]}
+        rules={[{ required: true, message: 'CPF ou CNPJ é obrigatório' }]}
       >
         <CustomInput.CpfCnpj />
       </Form.Item>
       <Form.Item
         label="Telefone"
         name="telephone"
-        rules={[{ required: true, message: "Telefone é obrigatório" }]}
+        rules={[{ required: true, message: 'Telefone é obrigatório' }]}
       >
         <CustomInput.Telephone />
       </Form.Item>
@@ -57,7 +56,7 @@ export function ClientForm({ onCancel, initialValues }: ClientFormProps) {
           <Form.Item
             label="Endereço"
             name="street"
-            rules={[{ required: true, message: "Endereço é obrigatório" }]}
+            rules={[{ required: true, message: 'Endereço é obrigatório' }]}
           >
             <Input />
           </Form.Item>
@@ -66,7 +65,7 @@ export function ClientForm({ onCancel, initialValues }: ClientFormProps) {
           <Form.Item
             label="Número"
             name="number"
-            rules={[{ required: true, message: "Número é obrigatório" }]}
+            rules={[{ required: true, message: 'Número é obrigatório' }]}
           >
             <Input />
           </Form.Item>
@@ -77,7 +76,7 @@ export function ClientForm({ onCancel, initialValues }: ClientFormProps) {
           <Form.Item
             label="CEP"
             name="zipCode"
-            rules={[{ required: true, message: "CEP é obrigatório" }]}
+            rules={[{ required: true, message: 'CEP é obrigatório' }]}
           >
             <CustomInput.Cep />
           </Form.Item>
@@ -86,7 +85,7 @@ export function ClientForm({ onCancel, initialValues }: ClientFormProps) {
           <Form.Item
             label="Cidade"
             name="city"
-            rules={[{ required: true, message: "Cidade é obrigatório" }]}
+            rules={[{ required: true, message: 'Cidade é obrigatório' }]}
           >
             <Input />
           </Form.Item>
@@ -95,7 +94,7 @@ export function ClientForm({ onCancel, initialValues }: ClientFormProps) {
           <Form.Item
             label="Estado"
             name="state"
-            rules={[{ required: true, message: "Estado é obrigatório" }]}
+            rules={[{ required: true, message: 'Estado é obrigatório' }]}
           >
             <Select.State />
           </Form.Item>

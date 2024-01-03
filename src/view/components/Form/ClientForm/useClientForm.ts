@@ -1,14 +1,14 @@
-import { toast } from "react-hot-toast";
-import { FetchCreateClientPayload } from "../../../../app/api/clients/post";
-import { apiException } from "../../../../app/services/httpClient";
-import { useFetchCreateClient } from "../../../../app/hooks/api/clients/useFetchCreateClient";
-import { useQueryClient } from "react-query";
-import { useFetchUpdateClient } from "../../../../app/hooks/api/clients/useFetchUpdateClient";
+import { toast } from 'react-hot-toast';
+import { useQueryClient } from 'react-query';
+
+import { FetchCreateClientPayload } from '../../../../app/api/clients/post';
+import { useFetchCreateClient } from '../../../../app/hooks/api/clients/useFetchCreateClient';
+import { useFetchUpdateClient } from '../../../../app/hooks/api/clients/useFetchUpdateClient';
+import { apiException } from '../../../../app/services/httpClient';
 
 export interface ClientFormType {
   id: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   document: string;
   telephone: string;
@@ -30,9 +30,8 @@ export function useClientForm(onFinish?: () => void, clientId?: string) {
   const queryClient = useQueryClient();
 
   async function handleSubmit(formData: ClientFormType) {
-    const payload: FetchCreateClientPayload["body"] = {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
+    const payload: FetchCreateClientPayload['body'] = {
+      name: formData.name,
       email: formData.email,
       document: formData.document,
       telephone: formData.telephone,
@@ -60,14 +59,13 @@ export function useClientForm(onFinish?: () => void, clientId?: string) {
         });
       }
 
-      queryClient.invalidateQueries({ queryKey: ["clients"] });
-      queryClient.invalidateQueries({ queryKey: ["client-details"] });
+      queryClient.invalidateQueries({ queryKey: ['clients'] });
+      queryClient.invalidateQueries({ queryKey: ['client-details'] });
 
       if (onFinish) {
         onFinish();
       }
     } catch (error) {
-      console.log(error);
       toast.error(apiException(error).message);
     }
   }

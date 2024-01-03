@@ -1,7 +1,6 @@
 export type ClientList = {
   id: string;
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   telephone: string;
   quantityOfProjects: number;

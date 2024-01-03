@@ -1,6 +1,5 @@
 export type ClientForm = {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   telephone: string;
   document: string;

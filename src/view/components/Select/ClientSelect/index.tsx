@@ -1,12 +1,13 @@
-import { Select } from "antd";
-import { useClientSelect } from "./useClientSelect";
-import { SelectProps } from "antd/lib";
+import { Select } from 'antd';
+import { SelectProps } from 'antd/lib';
+
+import { useClientSelect } from './useClientSelect';
 
 interface ClientSelectProps extends SelectProps<string | undefined> {}
 
 export function ClientSelect({ ...props }: ClientSelectProps) {
   const { clients, handleChangeTerm, isFetching, searchTerm } = useClientSelect(
-    props.value ?? ""
+    props.value ?? '',
   );
 
   return (
@@ -22,9 +23,9 @@ export function ClientSelect({ ...props }: ClientSelectProps) {
       searchValue={searchTerm}
       onSearch={handleChangeTerm}
       options={clients?.map((client) => ({
-        label: `${client.firstName} ${client.lastName ?? ""}`,
-        value: client.id,
+        label: client.label,
+        value: client.value,
       }))}
-    ></Select>
+    />
   );
 }

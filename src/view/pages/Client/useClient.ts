@@ -1,9 +1,10 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useFetchClientDetails } from "../../../app/hooks/api/clients/useFetchClientDetails";
-import { useState } from "react";
-import { useFetchDeleteClient } from "../../../app/hooks/api/clients/useFetchDeleteClient";
-import toast from "react-hot-toast";
-import { apiException } from "../../../app/services/httpClient";
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { useNavigate, useParams } from 'react-router-dom';
+
+import { useFetchClientDetails } from '../../../app/hooks/api/clients/useFetchClientDetails';
+import { useFetchDeleteClient } from '../../../app/hooks/api/clients/useFetchDeleteClient';
+import { apiException } from '../../../app/services/httpClient';
 
 export function useClient() {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
@@ -12,7 +13,7 @@ export function useClient() {
   const { clientId } = useParams();
   const navigate = useNavigate();
 
-  const { client, isFetching } = useFetchClientDetails(clientId ?? "");
+  const { client, isFetching } = useFetchClientDetails(clientId ?? '');
   const { isLoading, mutateAsync: handleRemoveClient } = useFetchDeleteClient();
 
   function handleOpenUpdateModal() {
@@ -33,11 +34,10 @@ export function useClient() {
 
   async function handleRemove() {
     try {
-      await handleRemoveClient({ path: { id: clientId ?? "" } });
+      await handleRemoveClient({ path: { id: clientId ?? '' } });
 
-      navigate("/clients");
+      navigate('/clients');
     } catch (error) {
-      console.log(error);
       toast.error(apiException(error).message);
     }
   }

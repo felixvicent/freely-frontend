@@ -8,6 +8,7 @@ import { Project } from '../../../../app/entities/Project';
 import { ProjectStatus } from '../../../../app/entities/ProjectStatus';
 import { formatCurrency } from '../../../../app/utils/format/formatCurrency';
 import { getProjectLabelByStatus } from '../../../../app/utils/labels/getProjectLabelByStatus';
+import { Filter } from '../../Filter';
 import { Modal } from '../../Modal';
 
 import { useProjectsTable } from './useProjectsTable';
@@ -27,6 +28,7 @@ export function ProjectsTable() {
     handleCloseDeleteProjectModal,
     handleDeleteProject,
     handleProjectToDelete,
+    handleChangeClientParams,
   } = useProjectsTable();
 
   const COLUMNS: ColumnsType<Project> = [
@@ -43,10 +45,9 @@ export function ProjectsTable() {
       dataIndex: 'cliente',
       key: 'cliente',
       render: (_: string, project: Project) => (
-        <Typography>
-          {project.client.firstName} {project.client.lastName}
-        </Typography>
+        <Typography>{project.client.name}</Typography>
       ),
+      filterDropdown: <Filter.Client onFilter={handleChangeClientParams} />,
     },
     {
       title: 'Valor',

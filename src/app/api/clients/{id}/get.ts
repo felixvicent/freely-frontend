@@ -1,5 +1,5 @@
-import { ClientPage } from "../../../entities/ClientPage";
-import { apiException, httpClient } from "../../../services/httpClient";
+import { ClientPage } from '../../../entities/ClientPage';
+import { apiException, httpClient } from '../../../services/httpClient';
 
 interface FetchClientDetailsPayload {
   path: {
@@ -10,7 +10,7 @@ interface FetchClientDetailsPayload {
 export async function fetchClientDetails({ path }: FetchClientDetailsPayload) {
   try {
     const { data } = await httpClient.get<ClientPage>(
-      `/clients/${path.clientId}`
+      `/clients/${path.clientId}`,
     );
 
     return data;

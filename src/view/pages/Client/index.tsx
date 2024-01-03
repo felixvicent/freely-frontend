@@ -66,8 +66,7 @@ export function Client() {
             <Card size="small" title="Indentificação" className="h-full">
               <div className="flex flex-col">
                 <span>
-                  <strong>Nome:</strong>{' '}
-                  {`${client?.firstName} ${client?.lastName ?? ''}`}
+                  <strong>Nome:</strong> {client?.name}
                 </span>
                 <span>
                   <strong>CPF/CNPJ:</strong> {client?.document}
@@ -170,8 +169,7 @@ export function Client() {
           formProps={{
             initialValues: {
               id: client?.id ?? '',
-              firstName: client?.firstName ?? '',
-              lastName: client?.lastName ?? '',
+              name: client?.name ?? '',
               document: client?.document ?? '',
               email: client?.email ?? '',
               telephone: client?.telephone ?? '',
@@ -189,7 +187,7 @@ export function Client() {
         <Modal.Confirm
           isLoading={isLoadingDelete}
           isOpen={isDeleteModalOpen}
-          message={`Deseja realmente remover o cliente ${client?.firstName}`}
+          message={`Deseja realmente remover o cliente ${client?.name}`}
           onClose={handleCloseDeleteModal}
           onSubmit={handleRemove}
           title="Removendo cliente"

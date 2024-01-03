@@ -87,6 +87,7 @@
     "react/no-unstable-nested-components": "off",
     "no-param-reassign": "off",
     "@typescript-eslint/no-shadow": "off",
-    "no-shadow": "off"
+    "no-shadow": "off",
+    "no-nested-ternary": "off"
   }
 }
