@@ -3,6 +3,7 @@ import { useQueryClient } from 'react-query';
 
 import { ProjectParams } from '../../../../app/api/projects/get';
 import { Project } from '../../../../app/entities/Project';
+import { ProjectStatus } from '../../../../app/entities/ProjectStatus';
 import { useFetchDeleteProject } from '../../../../app/hooks/api/projects/useFetchDeleteProject';
 import { useFetchListProjects } from '../../../../app/hooks/api/projects/useFetchListProjects';
 
@@ -10,8 +11,9 @@ export function useProjectsTable() {
   const [projectParams, setProjectParams] = useState<ProjectParams>({
     page: 0,
     size: 10,
-    sort: 'createdAt,asc',
+    sort: 'createdAt,desc',
     clientIds: [],
+    status: [],
   });
   const [selectedProjectsToUpdate, setSelectedProjectsToUpdate] =
     useState<Project>();
@@ -55,6 +57,21 @@ export function useProjectsTable() {
     }));
   }
 
+  function handleChangeStatusParams(status: ProjectStatus[]) {
+    setProjectParams((prevState) => ({
+      ...prevState,
+      status,
+    }));
+  }
+
+  function getSortOrder(key: string) {
+    return projectParams.sort?.split(',')[0] === key
+      ? projectParams.sort?.split(',')[1] === 'asc'
+        ? 'ascend'
+        : 'descend'
+      : undefined;
+  }
+
   useEffect(() => {
     refetch();
   }, [projectParams, refetch]);
@@ -74,5 +91,7 @@ export function useProjectsTable() {
     handleDeleteProject,
     handleProjectToDelete,
     handleChangeClientParams,
+    getSortOrder,
+    handleChangeStatusParams,
   };
 }

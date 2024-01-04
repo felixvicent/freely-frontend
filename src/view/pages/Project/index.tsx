@@ -88,8 +88,7 @@ export function Project() {
                 <span>
                   <strong>Nome:</strong>{' '}
                   <Link to={`/clients/${project?.client.id}`}>
-                    {`${project?.client.firstName}
-                    ${project?.client.lastName ?? ''}`}
+                    {project?.client.name}
                   </Link>
                 </span>
 

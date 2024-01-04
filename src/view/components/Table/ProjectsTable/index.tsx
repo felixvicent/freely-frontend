@@ -1,5 +1,6 @@
 import { Dropdown, Table, Typography } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+import dayjs from 'dayjs';
 import { AiOutlineEdit, AiOutlineMore } from 'react-icons/ai';
 import { CiTrash } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
@@ -29,6 +30,8 @@ export function ProjectsTable() {
     handleDeleteProject,
     handleProjectToDelete,
     handleChangeClientParams,
+    getSortOrder,
+    handleChangeStatusParams,
   } = useProjectsTable();
 
   const COLUMNS: ColumnsType<Project> = [
@@ -54,18 +57,25 @@ export function ProjectsTable() {
       dataIndex: 'value',
       key: 'value',
       render: (value: number) => `R$ ${formatCurrency(value)}`,
+      sorter: true,
+      sortOrder: getSortOrder('value'),
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       render: (status: ProjectStatus) => getProjectLabelByStatus(status),
+      filterDropdown: (
+        <Filter.ProjectStatus onFilter={handleChangeStatusParams} />
+      ),
     },
     {
-      title: 'Atividades',
-      dataIndex: 'activities',
-      key: 'activities',
-      render: (_: string, project: Project) => project.activities.length,
+      title: 'Data de criação',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      render: (value: string) => dayjs(value).format('DD/MM/YYYY'),
+      sorter: true,
+      sortOrder: getSortOrder('createdAt'),
     },
     {
       title: '',
@@ -119,6 +129,16 @@ export function ProjectsTable() {
               size: pageSize,
             }));
           },
+        }}
+        onChange={(_, __, sorter) => {
+          if (!(sorter instanceof Array)) {
+            handleChangeParams((prevState) => ({
+              ...prevState,
+              sort: `${sorter.columnKey},${
+                sorter.order === 'descend' ? 'desc' : 'asc' ?? 'asc'
+              }`,
+            }));
+          }
         }}
       />
       <Modal.ProjectForm

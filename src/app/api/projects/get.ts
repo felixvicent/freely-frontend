@@ -1,5 +1,6 @@
 import { Page } from '../../entities/Page';
 import { Project } from '../../entities/Project';
+import { ProjectStatus } from '../../entities/ProjectStatus';
 import { apiException, httpClient } from '../../services/httpClient';
 
 export interface ProjectParams {
@@ -7,6 +8,7 @@ export interface ProjectParams {
   size?: number;
   sort?: string;
   clientIds: string[];
+  status: ProjectStatus[];
 }
 interface FetchListProjectsPayload {
   params: ProjectParams;
