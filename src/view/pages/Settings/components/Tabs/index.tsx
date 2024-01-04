@@ -1,5 +1,7 @@
 import { Tabs, TabsProps } from 'antd';
 
+import { CollaboratorsTable } from '../../../../components/Table/CollaboratorsTable';
+
 import { Profile } from './Profile';
 
 export function SettingsTabs() {
@@ -8,6 +10,11 @@ export function SettingsTabs() {
       key: 'profile',
       label: 'Perfil de usuário',
       children: <Profile />,
+    },
+    {
+      key: 'collaborators',
+      label: 'Colaboradores',
+      children: <CollaboratorsTable />,
     },
   ];
 

@@ -22,7 +22,7 @@ export function ProjectStatusFilter({ onFilter }: ProjectStatusFilterProps) {
     <div className="p-2 w-[300px]">
       <Form layout="vertical">
         <Form.Item>
-          <span>Cliente:</span>
+          <span>Status:</span>
           <Select
             showSearch
             allowClear
