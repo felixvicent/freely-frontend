@@ -5,6 +5,7 @@ import {
   AiOutlineMenuFold,
   AiOutlineUser,
   AiOutlineProject,
+  AiOutlineSetting,
 } from 'react-icons/ai';
 import { CiLogout } from 'react-icons/ci';
 import { FiHome, FiUsers } from 'react-icons/fi';
@@ -59,6 +60,12 @@ export function AppLayout() {
               label: 'Projetos',
               onClick: () => navigate('/projects'),
             },
+            {
+              key: '/settings',
+              icon: <AiOutlineSetting />,
+              label: 'Configurações',
+              onClick: () => navigate('/settings'),
+            },
           ]}
         />
       </Layout.Sider>
@@ -78,6 +85,12 @@ export function AppLayout() {
           <Dropdown
             menu={{
               items: [
+                {
+                  key: 'settings',
+                  label: 'Configurações',
+                  icon: <AiOutlineSetting />,
+                  onClick: () => navigate('/settings'),
+                },
                 {
                   key: 'logout',
                   label: 'Sair',

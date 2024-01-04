@@ -7,9 +7,14 @@ import { UserFormType, useUserForm } from './useUserForm';
 export interface UserFormProps {
   onCancel?: () => void;
   initialValues?: UserFormType;
+  showCancel?: boolean;
 }
 
-export function UserForm({ onCancel, initialValues }: UserFormProps) {
+export function UserForm({
+  onCancel,
+  initialValues,
+  showCancel = true,
+}: UserFormProps) {
   const { handleSubmit, isLoading } = useUserForm(initialValues?.id, onCancel);
 
   return (
@@ -50,7 +55,7 @@ export function UserForm({ onCancel, initialValues }: UserFormProps) {
       </Form.Item>
 
       <div className="flex gap-4 justify-end">
-        <Button onClick={onCancel}>Cancelar</Button>
+        {showCancel && <Button onClick={onCancel}>Cancelar</Button>}
         <Button loading={isLoading} htmlType="submit" type="primary">
           Salvar
         </Button>

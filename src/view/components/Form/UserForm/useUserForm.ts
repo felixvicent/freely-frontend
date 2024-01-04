@@ -37,6 +37,7 @@ export function useUserForm(userId?: string, onFinish?: () => void) {
       }
 
       queryClient.invalidateQueries({ queryKey: ['users'] });
+      queryClient.invalidateQueries({ queryKey: ['users-me'] });
 
       onFinish?.();
     } catch (error) {

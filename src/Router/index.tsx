@@ -10,6 +10,7 @@ import { Home } from '../view/pages/Home';
 import { Login } from '../view/pages/Login';
 import { Project } from '../view/pages/Project';
 import { Projects } from '../view/pages/Projects';
+import { Settings } from '../view/pages/Settings';
 import { Users } from '../view/pages/Users';
 
 import { AuthGuard } from './AuthGuard';
@@ -30,6 +31,7 @@ export function Router() {
             <Route path="/clients/:clientId" element={<Client />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:projectId" element={<Project />} />
+            <Route path="/settings" element={<Settings />} />
           </Route>
         </Route>
         <Route element={<AuthGuard isPrivate isAdmin />}>
