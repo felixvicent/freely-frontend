@@ -1,7 +1,9 @@
-import { Button } from "antd";
-import { useClients } from "./useClients";
-import { Modal } from "../../components/Modal";
-import { Table } from "../../components/Table";
+import { Button } from 'antd';
+
+import { Modal } from '../../components/Modal';
+import { Table } from '../../components/Table';
+
+import { useClients } from './useClients';
 
 export function Clients() {
   const {

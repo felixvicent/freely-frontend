@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import { Link } from 'react-router-dom';
 
@@ -45,6 +45,14 @@ export function CollaboratorsTable() {
       title: 'Email',
       dataIndex: 'email',
       key: 'email',
+    },
+    {
+      title: 'Status',
+      dataIndex: 'active',
+      key: 'active',
+      render: (value: boolean) => (
+        <Tag color={value ? 'green' : 'red'}>{value ? 'Ativo' : 'Inativo'}</Tag>
+      ),
     },
   ];
 

@@ -1,10 +1,15 @@
 import { Tabs, TabsProps } from 'antd';
 
-import { CollaboratorsTable } from '../../../../components/Table/CollaboratorsTable';
+import { useAuth } from '../../../../../app/hooks/useAuth';
 
+import { Collaborators } from './Collaborators';
 import { Profile } from './Profile';
 
+const ADMIN_ROUTES = ['collaborators'];
+
 export function SettingsTabs() {
+  const { hasAuthority } = useAuth();
+
   const items: TabsProps['items'] = [
     {
       key: 'profile',
@@ -14,9 +19,15 @@ export function SettingsTabs() {
     {
       key: 'collaborators',
       label: 'Colaboradores',
-      children: <CollaboratorsTable />,
+      children: <Collaborators />,
     },
   ];
 
-  return <Tabs items={items} tabPosition="left" destroyInactiveTabPane />;
+  const filteredTabs = items.filter(
+    (item) => hasAuthority('COMPANY') || !ADMIN_ROUTES.includes(item.key),
+  );
+
+  return (
+    <Tabs items={filteredTabs} tabPosition="left" destroyInactiveTabPane />
+  );
 }
