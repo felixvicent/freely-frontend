@@ -1,23 +1,24 @@
 import { useEffect, useState } from 'react';
 
-import { ClientParams } from '../../../../app/api/clients/get';
+import { CollaboratorParams } from '../../../../app/api/collaborators/get';
 import { useFetchListCollaborators } from '../../../../app/hooks/api/collaborators/useFetchListCollaborators';
 
 export function useCollaboratorsTable() {
-  const [collaboratorParams, setCollaboratorParams] = useState<ClientParams>({
-    page: 0,
-    size: 10,
-    sort: 'name,asc',
-    clientIds: [],
-  });
+  const [collaboratorParams, setCollaboratorParams] =
+    useState<CollaboratorParams>({
+      page: 0,
+      size: 10,
+      sort: 'name,asc',
+      collaboratorIds: [],
+    });
 
   const { collaborators, isFetching, refetch } =
     useFetchListCollaborators(collaboratorParams);
 
-  function handleChangeClientParams(clientIds: string[]) {
+  function handleChangeCollaboratorsParams(collaboratorIds: string[]) {
     setCollaboratorParams((prevState) => ({
       ...prevState,
-      clientIds,
+      collaboratorIds,
     }));
   }
 
@@ -29,7 +30,7 @@ export function useCollaboratorsTable() {
     collaborators,
     isFetching,
     handleChangeParams: setCollaboratorParams,
-    clientParams: collaboratorParams,
-    handleChangeClientParams,
+    collaboratorParams,
+    handleChangeCollaboratorsParams,
   };
 }

@@ -6,6 +6,7 @@ export interface CollaboratorParams {
   page?: number;
   size?: number;
   sort?: string;
+  collaboratorIds: string[];
 }
 interface FetchListCollaboratorPayload {
   params: CollaboratorParams;

@@ -1,45 +1,27 @@
 import { Table, Tag } from 'antd';
 import { ColumnsType } from 'antd/es/table';
-import { Link } from 'react-router-dom';
 
 import { User } from '../../../../app/entities/User';
+import { Filter } from '../../Filter';
 
 import { useCollaboratorsTable } from './useCollaboratorsTable';
 
 export function CollaboratorsTable() {
-  const { collaborators, isFetching, handleChangeParams, clientParams } =
-    useCollaboratorsTable();
+  const {
+    collaborators,
+    isFetching,
+    handleChangeParams,
+    handleChangeCollaboratorsParams,
+  } = useCollaboratorsTable();
 
   const COLUMNS: ColumnsType<User> = [
     {
       title: 'Nome',
       dataIndex: 'name',
       key: 'name',
-      render: (_: string, collaborator: User) => (
-        <Link to={`/clients/${collaborator.id}`}>{collaborator.name}</Link>
+      filterDropdown: () => (
+        <Filter.Collaborator onFilter={handleChangeCollaboratorsParams} />
       ),
-      filteredValue: clientParams.clientIds,
-      sorter: true,
-      sortOrder:
-        clientParams.sort?.split(',')[1] === 'asc' ? 'ascend' : 'descend',
-      onHeaderCell: () => ({
-        onClick: () => {
-          const [currentSort, currentOrder] =
-            clientParams.sort?.split(',') ?? [];
-          const sortBy = 'firstName';
-          const sortOrder =
-            currentSort === sortBy
-              ? currentOrder === 'asc'
-                ? 'desc'
-                : 'asc'
-              : 'asc';
-
-          handleChangeParams((prevState) => ({
-            ...prevState,
-            sort: `${sortBy},${sortOrder}`,
-          }));
-        },
-      }),
     },
     {
       title: 'Email',
