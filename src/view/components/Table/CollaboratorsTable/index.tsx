@@ -19,6 +19,11 @@ export function CollaboratorsTable() {
     handleOpenUpdateModal,
     selectedCollaboratorToUpdate,
     collaboratorParams,
+    isDeleteLoading,
+    handleDelete,
+    handleCloseDeleteModal,
+    handleOpenDeleteModal,
+    selectedCollaboratorToDelete,
   } = useCollaboratorsTable();
 
   const COLUMNS: ColumnsType<User> = [
@@ -67,6 +72,7 @@ export function CollaboratorsTable() {
                 key: 'remove',
                 label: 'Remover',
                 icon: <CiTrash size={18} />,
+                onClick: () => handleOpenDeleteModal(user),
               },
             ],
           }}
@@ -112,6 +118,14 @@ export function CollaboratorsTable() {
             id: selectedCollaboratorToUpdate?.id ?? '',
           },
         }}
+      />
+      <Modal.Confirm
+        isLoading={isDeleteLoading}
+        isOpen={!!selectedCollaboratorToDelete}
+        message={`Deseja realmente remover o colaborador ${selectedCollaboratorToDelete?.name} e todos os seus dados?`}
+        onClose={handleCloseDeleteModal}
+        onSubmit={handleDelete}
+        title={`Removendo usuário o colaborador ${selectedCollaboratorToDelete?.name}`}
       />
     </>
   );
