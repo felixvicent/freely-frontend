@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
 
 import { CollaboratorParams } from '../../../../app/api/collaborators/get';
+import { User } from '../../../../app/entities/User';
 import { useFetchListCollaborators } from '../../../../app/hooks/api/collaborators/useFetchListCollaborators';
 
 export function useCollaboratorsTable() {
+  const [selectedCollaboratorToUpdate, setSelectedCollaboratorToUpdate] =
+    useState<User | undefined>();
+
   const [collaboratorParams, setCollaboratorParams] =
     useState<CollaboratorParams>({
       page: 0,
@@ -22,6 +26,14 @@ export function useCollaboratorsTable() {
     }));
   }
 
+  function handleOpenUpdateModal(user: User) {
+    setSelectedCollaboratorToUpdate(user);
+  }
+
+  function handleCloseUpdateModal() {
+    setSelectedCollaboratorToUpdate(undefined);
+  }
+
   useEffect(() => {
     refetch();
   }, [collaboratorParams, refetch]);
@@ -32,5 +44,8 @@ export function useCollaboratorsTable() {
     handleChangeParams: setCollaboratorParams,
     collaboratorParams,
     handleChangeCollaboratorsParams,
+    selectedCollaboratorToUpdate,
+    handleOpenUpdateModal,
+    handleCloseUpdateModal,
   };
 }

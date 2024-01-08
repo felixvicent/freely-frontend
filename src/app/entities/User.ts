@@ -7,4 +7,5 @@ export type User = {
   active: boolean;
   role: string;
   createdAt: string;
+  office?: string;
 };

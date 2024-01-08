@@ -3,6 +3,7 @@ import { useQueryClient } from 'react-query';
 
 import { FetchCreateCollaboratorPayload } from '../../../../app/api/collaborators/post';
 import { useFetchCreateCollaborator } from '../../../../app/hooks/api/collaborators/useFetchCreateCollaborator';
+import { useFetchUpdateCollaborator } from '../../../../app/hooks/api/collaborators/useFetchUpdateCollaborator';
 import { apiException } from '../../../../app/services/httpClient';
 
 export interface CollaboratorFormType {
@@ -19,10 +20,11 @@ export function useCollaboratorForm(userId?: string, onFinish?: () => void) {
     mutateAsync: createCollaborator,
     isLoading: isCreateLoadingCollaborator,
   } = useFetchCreateCollaborator();
-  // const {
-  //   mutateAsync: updateCollaborator,
-  //   isLoading: isUpdateLoadingCollaborator,
-  // } = useFetchUpdateCollaborator();
+
+  const {
+    mutateAsync: updateCollaborator,
+    isLoading: isUpdateLoadingCollaborator,
+  } = useFetchUpdateCollaborator();
 
   const queryClient = useQueryClient();
 
@@ -36,7 +38,7 @@ export function useCollaboratorForm(userId?: string, onFinish?: () => void) {
     };
     try {
       if (userId) {
-        // await updateCollaborator({ body: payload, path: { id: userId } });
+        await updateCollaborator({ body: payload, path: { id: userId } });
       } else {
         await createCollaborator({ body: payload });
       }
@@ -50,7 +52,7 @@ export function useCollaboratorForm(userId?: string, onFinish?: () => void) {
   }
 
   return {
-    isLoading: isCreateLoadingCollaborator,
+    isLoading: isCreateLoadingCollaborator || isUpdateLoadingCollaborator,
     handleSubmit,
   };
 }
