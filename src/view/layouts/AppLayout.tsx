@@ -7,6 +7,7 @@ import {
   AiOutlineProject,
   AiOutlineSetting,
 } from 'react-icons/ai';
+import { BsListTask } from 'react-icons/bs';
 import { CiLogout } from 'react-icons/ci';
 import { FiHome, FiUsers } from 'react-icons/fi';
 import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
@@ -59,6 +60,12 @@ export function AppLayout() {
               icon: <AiOutlineProject />,
               label: 'Projetos',
               onClick: () => navigate('/projects'),
+            },
+            {
+              key: '/activities',
+              icon: <BsListTask />,
+              label: 'Atividades',
+              onClick: () => navigate('/activities'),
             },
             {
               key: '/settings',

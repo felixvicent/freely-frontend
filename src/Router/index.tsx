@@ -4,6 +4,7 @@ import { AdminLayout } from '../view/layouts/AdminLayout';
 import { AppLayout } from '../view/layouts/AppLayout';
 import { AuthLayout } from '../view/layouts/AuthLayout';
 import { ActiveAccount } from '../view/pages/ActiveAccount';
+import { Activities } from '../view/pages/Activities';
 import { Client } from '../view/pages/Client';
 import { Clients } from '../view/pages/Clients';
 import { Home } from '../view/pages/Home';
@@ -31,6 +32,7 @@ export function Router() {
             <Route path="/clients/:clientId" element={<Client />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/projects/:projectId" element={<Project />} />
+            <Route path="/activities" element={<Activities />} />
             <Route path="/settings" element={<Settings />} />
           </Route>
         </Route>

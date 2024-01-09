@@ -16,7 +16,6 @@ interface ActivitiesDropProps {
   isLoading: boolean;
   status: ActivityStatus;
   title: string;
-  projectId: string;
 }
 
 export function ActivitiesDrop({
@@ -24,7 +23,6 @@ export function ActivitiesDrop({
   isLoading,
   status,
   title,
-  projectId,
 }: ActivitiesDropProps) {
   const { drop, isActive } = useActivitiesDrop(status);
 
@@ -35,7 +33,7 @@ export function ActivitiesDrop({
         loading={isLoading}
         renderItem={(activity) => (
           <div className="my-2">
-            <Draggable.Activities activity={activity} projectId={projectId} />
+            <Draggable.Activities activity={activity} />
           </div>
         )}
       />

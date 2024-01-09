@@ -4,15 +4,17 @@ import { useQueryClient } from 'react-query';
 
 import { ActivityStatus } from '../../../../app/entities/AcitivtyStatus';
 import { Activity } from '../../../../app/entities/Activity';
+import { Project } from '../../../../app/entities/Project';
 import { useFetchDeleteActivity } from '../../../../app/hooks/api/activities/useFetchDeleteActivity';
 import { useFetchUpdateActivity } from '../../../../app/hooks/api/activities/useFetchUpdateActivities';
 import { apiException } from '../../../../app/services/httpClient';
 
 interface IDropResult {
   status: ActivityStatus;
+  project: Project;
 }
 
-export function useActivitiesDraggable(activity: Activity, projectId: string) {
+export function useActivitiesDraggable(activity: Activity) {
   const { mutateAsync: updateActivity } = useFetchUpdateActivity();
   const { mutateAsync: deleteActivity, isLoading } = useFetchDeleteActivity();
 
@@ -47,7 +49,7 @@ export function useActivitiesDraggable(activity: Activity, projectId: string) {
           updateActivity({
             path: { id: item.id },
             body: {
-              projectId,
+              projectId: activity.project.id,
               title: item.title,
               status: dropResult.status,
               estimatedDate: '',

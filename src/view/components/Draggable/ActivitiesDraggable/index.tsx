@@ -2,6 +2,7 @@ import { Button, Card } from 'antd';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
+import { useLocation } from 'react-router-dom';
 
 import { ActivityStatus } from '../../../../app/entities/AcitivtyStatus';
 import { Activity } from '../../../../app/entities/Activity';
@@ -12,26 +13,27 @@ import { useActivitiesDraggable } from './useActivitiesDraggable';
 
 interface ActivitiesDraggableProps {
   activity: Activity;
-  projectId: string;
 }
 
-export function ActivitiesDraggable({
-  activity,
-  projectId,
-}: ActivitiesDraggableProps) {
+export function ActivitiesDraggable({ activity }: ActivitiesDraggableProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
-  const { drag, handleDeleteActivity, isLoading } = useActivitiesDraggable(
-    activity,
-    projectId,
-  );
+  const location = useLocation();
+
+  const { drag, handleDeleteActivity, isLoading } =
+    useActivitiesDraggable(activity);
+
+  const title =
+    location.pathname.split('/')[1] === 'activities'
+      ? `${activity.project.title} > ${activity.title}`
+      : activity.title;
 
   return (
     <>
       <Card
         size="small"
         ref={drag}
-        title={activity.title}
+        title={title}
         extra={
           <Button
             className="p-0"

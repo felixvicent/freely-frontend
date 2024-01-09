@@ -137,7 +137,6 @@ export function Project() {
                   <Row gutter={16}>
                     <Col span={6}>
                       <Drop.Activities
-                        projectId={project?.id ?? ''}
                         activities={pendingActivities}
                         isLoading={isLoading}
                         status={ActivityStatus.PENDING}
@@ -146,7 +145,6 @@ export function Project() {
                     </Col>
                     <Col span={6}>
                       <Drop.Activities
-                        projectId={project?.id ?? ''}
                         activities={waitingActivities}
                         isLoading={isLoading}
                         status={ActivityStatus.WAITING}
@@ -155,7 +153,6 @@ export function Project() {
                     </Col>
                     <Col span={6}>
                       <Drop.Activities
-                        projectId={project?.id ?? ''}
                         activities={progressActivities}
                         isLoading={isLoading}
                         status={ActivityStatus.PROGRESS}
@@ -164,7 +161,6 @@ export function Project() {
                     </Col>
                     <Col span={6}>
                       <Drop.Activities
-                        projectId={project?.id ?? ''}
                         activities={doneActivities}
                         isLoading={isLoading}
                         status={ActivityStatus.DONE}
