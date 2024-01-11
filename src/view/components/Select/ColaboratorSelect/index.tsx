@@ -1,5 +1,7 @@
-import { Select } from 'antd';
+import { Select, Typography } from 'antd';
 import { SelectProps } from 'antd/lib';
+
+import { Avatar } from '../../Avatar';
 
 import { useColaboratorSelect } from './useColaboratorSelect';
 
@@ -21,10 +23,17 @@ export function CollaboratorSelect({ ...props }: CollaboratorSelectProps) {
       loading={isFetching}
       searchValue={searchTerm}
       onSearch={handleChangeTerm}
-      options={collaborators?.map((collaborator) => ({
-        label: collaborator.label,
-        value: collaborator.value,
-      }))}
-    />
+    >
+      {collaborators?.map((collaborator) => (
+        <Select.Option key={collaborator.value}>
+          <div className="flex items-center gap-2">
+            <Avatar.Collaborator size="small" label={collaborator.label} />
+            <Typography className="text-ellipsis overflow-hidden">
+              {collaborator.label}
+            </Typography>
+          </div>
+        </Select.Option>
+      ))}
+    </Select>
   );
 }

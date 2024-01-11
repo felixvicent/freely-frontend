@@ -12,9 +12,9 @@ export function useLogin() {
 
   async function handleSubmit(formData: FetchSignInBody) {
     try {
-      const { token } = await fetchLogin(formData);
+      const { token, user } = await fetchLogin(formData);
 
-      signin(token);
+      signin(token, user);
     } catch (error) {
       toast.error(apiException(error).message);
     }

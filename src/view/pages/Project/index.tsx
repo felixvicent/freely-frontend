@@ -1,4 +1,13 @@
-import { Button, Card, Col, Dropdown, MenuProps, Row, Select } from 'antd';
+import {
+  Button,
+  Card,
+  Col,
+  Dropdown,
+  MenuProps,
+  Row,
+  Select,
+  Avatar as AvatarAntd,
+} from 'antd';
 import dayjs from 'dayjs';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -9,6 +18,7 @@ import { ActivityStatus } from '../../../app/entities/ActivityStatus';
 import { ProjectStatus } from '../../../app/entities/ProjectStatus';
 import { formatCurrency } from '../../../app/utils/format/formatCurrency';
 import { getProjectLabelByStatus } from '../../../app/utils/labels/getProjectLabelByStatus';
+import { Avatar } from '../../components/Avatar';
 import { Container } from '../../components/Container';
 import { Drop } from '../../components/Drop';
 import { Modal } from '../../components/Modal';
@@ -39,6 +49,9 @@ export function Project() {
     doneActivities,
     isUpdateProjectStatusLoading,
     handleUpdateProjectStatus,
+    collaborators,
+    selectedCollaborators,
+    handleChangeCollaboratorsFilter,
   } = useProject();
 
   const items: MenuProps['items'] = [
@@ -133,6 +146,29 @@ export function Project() {
                   </Button>
                 }
               >
+                <div>
+                  <AvatarAntd.Group
+                    className="p-2 flex gap-2 justify-end"
+                    maxCount={5}
+                  >
+                    {collaborators?.map((collaborator) => (
+                      <Avatar.Collaborator
+                        role={collaborator.role}
+                        key={collaborator.id}
+                        onClick={() =>
+                          handleChangeCollaboratorsFilter(collaborator.id)
+                        }
+                        className={`cursor-pointer ${
+                          selectedCollaborators.includes(collaborator.id)
+                            ? '!border-purple-700 border'
+                            : ''
+                        }`}
+                        size="large"
+                        label={collaborator.name}
+                      />
+                    ))}
+                  </AvatarAntd.Group>
+                </div>
                 <DndProvider backend={HTML5Backend}>
                   <Row gutter={16}>
                     <Col span={6}>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -12,12 +12,17 @@ import { useFetchPendingActivities } from '../../../app/hooks/api/activities/use
 import { useFetchProgressActivities } from '../../../app/hooks/api/activities/useFetchProgressActivities';
 import { useFetchUpdateActivity } from '../../../app/hooks/api/activities/useFetchUpdateActivities';
 import { useFetchWaitingActivities } from '../../../app/hooks/api/activities/useFetchWaitingActivities';
+import { useFetchListAllCollaborators } from '../../../app/hooks/api/collaborators/useFetchListAllCollaborators';
 import { useFetchDeleteProject } from '../../../app/hooks/api/projects/useFetchDeleteProject';
 import { useFetchProjectDetails } from '../../../app/hooks/api/projects/useFetchProjectDetails';
 import { useFetchUpdateProjectStatus } from '../../../app/hooks/api/projects/useFetchUpdateProjectStatus';
 import { apiException } from '../../../app/services/httpClient';
 
 export function useProject() {
+  const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>(
+    [],
+  );
+
   const { projectId } = useParams();
   const navigate = useNavigate();
 
@@ -35,13 +40,21 @@ export function useProject() {
 
   const { isFetching, project } = useFetchProjectDetails(projectId ?? '');
 
-  const { pendingActivities } = useFetchPendingActivities(projectId ?? '');
+  const { pendingActivities, refetch: refetchPending } =
+    useFetchPendingActivities(projectId ?? '', selectedCollaborators);
 
-  const { waitingActivities } = useFetchWaitingActivities(projectId ?? '');
+  const { waitingActivities, refetch: refetchWaiting } =
+    useFetchWaitingActivities(projectId ?? '', selectedCollaborators);
 
-  const { progressActivities } = useFetchProgressActivities(projectId ?? '');
+  const { progressActivities, refetch: refetchProgress } =
+    useFetchProgressActivities(projectId ?? '', selectedCollaborators);
 
-  const { doneActivities } = useFetchDoneActivities(projectId ?? '');
+  const { doneActivities, refetch: refetchDone } = useFetchDoneActivities(
+    projectId ?? '',
+    selectedCollaborators,
+  );
+
+  const { collaborators } = useFetchListAllCollaborators();
 
   const { isLoading, mutateAsync: removeProject } = useFetchDeleteProject();
 
@@ -86,6 +99,16 @@ export function useProject() {
 
   function handleCloseDeleteActivityModal() {
     setSelectedActivityToDelete(undefined);
+  }
+
+  function handleChangeCollaboratorsFilter(colaboratorId: string) {
+    if (selectedCollaborators.includes(colaboratorId)) {
+      setSelectedCollaborators((prevState) =>
+        prevState.filter((colab) => colab !== colaboratorId),
+      );
+    } else {
+      setSelectedCollaborators((prevState) => [...prevState, colaboratorId]);
+    }
   }
 
   async function handleRemove() {
@@ -144,6 +167,19 @@ export function useProject() {
     }
   }
 
+  useEffect(() => {
+    refetchPending();
+    refetchWaiting();
+    refetchProgress();
+    refetchDone();
+  }, [
+    refetchPending,
+    selectedCollaborators,
+    refetchWaiting,
+    refetchProgress,
+    refetchDone,
+  ]);
+
   return {
     isLoading:
       isFetching ||
@@ -173,5 +209,8 @@ export function useProject() {
     doneActivities,
     isUpdateProjectStatusLoading,
     handleUpdateProjectStatus,
+    collaborators,
+    selectedCollaborators,
+    handleChangeCollaboratorsFilter,
   };
 }

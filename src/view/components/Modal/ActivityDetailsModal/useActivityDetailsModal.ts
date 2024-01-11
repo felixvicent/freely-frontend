@@ -52,7 +52,7 @@ export function useActivityDetailsModal(activityId: string, isOpen: boolean) {
           ),
         ],
       });
-      queryClient.invalidateQueries(['acitivity-details']);
+      queryClient.invalidateQueries(['activity-details']);
     } catch (error) {
       toast.error(apiException(error).message);
     }
@@ -69,7 +69,14 @@ export function useActivityDetailsModal(activityId: string, isOpen: boolean) {
         },
       });
 
-      queryClient.invalidateQueries(['acitivity-details']);
+      queryClient.invalidateQueries(['activity-details']);
+      queryClient.invalidateQueries({
+        queryKey: [
+          getQueryToInvalidate(
+            ActivityStatus[activity?.status as keyof typeof ActivityStatus],
+          ),
+        ],
+      });
     } catch (error) {
       toast.error(apiException(error).message);
     }

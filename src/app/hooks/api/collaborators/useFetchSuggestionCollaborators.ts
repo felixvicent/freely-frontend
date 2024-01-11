@@ -4,7 +4,7 @@ import { fetchSuggestionCollaborators } from '../../../api/collaborators/suggest
 
 export function useFetchSuggestionCollaborators(
   query: string,
-  selectedCollaborator?: string,
+  selectedCollaboratorId?: string,
 ) {
   const { data, isFetching, refetch } = useQuery({
     queryKey: ['collaborators-suggestion'],
@@ -12,7 +12,7 @@ export function useFetchSuggestionCollaborators(
       fetchSuggestionCollaborators({
         params: {
           query,
-          selectedCollaborator,
+          selectedCollaboratorId,
         },
       }),
   });

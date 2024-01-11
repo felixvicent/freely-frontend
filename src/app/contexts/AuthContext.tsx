@@ -2,12 +2,14 @@ import { ReactNode, createContext, useCallback, useState } from 'react';
 
 import { localStorageKeys } from '../config/localStorageKeys';
 import { Token } from '../entities/Token';
+import { User } from '../entities/User';
 
 interface AuthContextValue {
   signedIn: boolean;
-  signin: (token: Token) => void;
+  signin: (token: Token, user: User) => void;
   signout: () => void;
   hasAuthority: (authority: string) => boolean;
+  user: User;
 }
 
 interface AuthProviderProps {
@@ -31,22 +33,33 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     return JSON.parse(userRoles) as string[];
   });
+  const [user, setUser] = useState(() => {
+    const user = localStorage.getItem(localStorageKeys.USER);
 
-  const signin = useCallback((token: Token) => {
+    if (!user) return null;
+
+    return JSON.parse(user);
+  });
+
+  const signin = useCallback((token: Token, user: User) => {
     localStorage.setItem(localStorageKeys.ACCESS_TOKEN, token.token);
     localStorage.setItem(
       localStorageKeys.USER_ROLES,
       JSON.stringify(token.roles),
     );
+    localStorage.setItem(localStorageKeys.USER, JSON.stringify(user));
     setSignedIn(true);
     setRoles(token.roles);
+    setUser(user);
   }, []);
 
   const signout = useCallback(() => {
     localStorage.removeItem(localStorageKeys.ACCESS_TOKEN);
     localStorage.removeItem(localStorageKeys.USER_ROLES);
+    localStorage.removeItem(localStorageKeys.USER);
     setSignedIn(false);
     setRoles([]);
+    setUser(null);
   }, []);
 
   const hasAuthority = useCallback(
@@ -55,7 +68,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
   );
 
   return (
-    <AuthContext.Provider value={{ signedIn, signin, signout, hasAuthority }}>
+    <AuthContext.Provider
+      value={{ signedIn, signin, signout, hasAuthority, user }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -5,6 +5,7 @@ import { apiException, httpClient } from '../../services/httpClient';
 interface FetchActivitiesPayload {
   status: ActivityStatus;
   projectId: string;
+  collaboratorsIds?: string[];
 }
 
 export async function fetchActivities(params: FetchActivitiesPayload) {

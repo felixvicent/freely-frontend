@@ -3,7 +3,7 @@ import { httpClient } from '../../../services/httpClient';
 
 export interface CollaboratorParams {
   query?: string;
-  selectedCollaborator?: string;
+  selectedCollaboratorId?: string;
 }
 interface FetchSuggestionCollaboratorsPayload {
   params: CollaboratorParams;

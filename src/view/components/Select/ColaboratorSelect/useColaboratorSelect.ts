@@ -16,7 +16,7 @@ export function useColaboratorSelect(selectedClientId?: string) {
 
   useEffect(() => {
     refetch();
-  }, [searchTerm, refetch]);
+  }, [searchTerm, refetch, selectedClientId]);
 
   return {
     searchTerm,

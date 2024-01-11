@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { Activity } from '../../../app/entities/Activity';
@@ -7,6 +7,7 @@ import { useFetchDoneActivities } from '../../../app/hooks/api/activities/useFet
 import { useFetchPendingActivities } from '../../../app/hooks/api/activities/useFetchPendingActivities';
 import { useFetchProgressActivities } from '../../../app/hooks/api/activities/useFetchProgressActivities';
 import { useFetchWaitingActivities } from '../../../app/hooks/api/activities/useFetchWaitingActivities';
+import { useFetchListAllCollaborators } from '../../../app/hooks/api/collaborators/useFetchListAllCollaborators';
 import { apiException } from '../../../app/services/httpClient';
 
 export function useActivities() {
@@ -15,18 +16,29 @@ export function useActivities() {
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isCreateActivityModalOpen, setIsCreateActivityModalOpen] =
     useState(false);
+  const [selectedCollaborators, setSelectedCollaborators] = useState<string[]>(
+    [],
+  );
 
   const [selectedActivityToDelete, setSelectedActivityToDelete] = useState<
     Activity | undefined
   >();
 
-  const { pendingActivities } = useFetchPendingActivities();
+  const { pendingActivities, refetch: refetchPending } =
+    useFetchPendingActivities('', selectedCollaborators);
 
-  const { waitingActivities } = useFetchWaitingActivities();
+  const { waitingActivities, refetch: refetchWaiting } =
+    useFetchWaitingActivities('', selectedCollaborators);
 
-  const { progressActivities } = useFetchProgressActivities();
+  const { progressActivities, refetch: refetchProgress } =
+    useFetchProgressActivities('', selectedCollaborators);
 
-  const { doneActivities } = useFetchDoneActivities();
+  const { doneActivities, refetch: refetchDone } = useFetchDoneActivities(
+    '',
+    selectedCollaborators,
+  );
+
+  const { collaborators } = useFetchListAllCollaborators();
 
   const { isLoading: isRemoveActivityLoading, mutateAsync: removeActivity } =
     useFetchDeleteActivity();
@@ -75,6 +87,29 @@ export function useActivities() {
     }
   }
 
+  function handleChangeCollaboratorsFilter(colaboratorId: string) {
+    if (selectedCollaborators.includes(colaboratorId)) {
+      setSelectedCollaborators((prevState) =>
+        prevState.filter((colab) => colab !== colaboratorId),
+      );
+    } else {
+      setSelectedCollaborators((prevState) => [...prevState, colaboratorId]);
+    }
+  }
+
+  useEffect(() => {
+    refetchPending();
+    refetchDone();
+    refetchProgress();
+    refetchWaiting();
+  }, [
+    refetchDone,
+    refetchPending,
+    refetchProgress,
+    refetchWaiting,
+    selectedCollaborators,
+  ]);
+
   return {
     isLoading: isRemoveActivityLoading,
     isDeleteProjectModalOpen,
@@ -95,5 +130,8 @@ export function useActivities() {
     waitingActivities,
     progressActivities,
     doneActivities,
+    collaborators,
+    handleChangeCollaboratorsFilter,
+    selectedCollaborators,
   };
 }

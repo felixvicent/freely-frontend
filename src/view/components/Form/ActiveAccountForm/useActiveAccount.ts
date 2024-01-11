@@ -21,12 +21,12 @@ export function useActiveAccount() {
     if (!code) return;
 
     try {
-      const { token } = await fetchActiveAccount({
+      const { token, user } = await fetchActiveAccount({
         password: formData.password,
         code,
       });
 
-      signin(token);
+      signin(token, user);
 
       navigate('/');
     } catch (error) {

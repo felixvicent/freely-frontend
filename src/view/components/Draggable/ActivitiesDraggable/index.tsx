@@ -8,6 +8,7 @@ import { ActivityStatus } from '../../../../app/entities/ActivityStatus';
 import { getRemainigDate } from '../../../../app/utils/date/getRemainingDate';
 import { isInAlert } from '../../../../app/utils/date/isInAlert';
 import { isInDanger } from '../../../../app/utils/date/isInDanger';
+import { Avatar } from '../../Avatar';
 import { Modal } from '../../Modal';
 
 import { useActivitiesDraggable } from './useActivitiesDraggable';
@@ -71,6 +72,13 @@ export function ActivitiesDraggable({ activity }: ActivitiesDraggableProps) {
             )}
           </span>
         </span>
+        <div className="flex justify-end mt-2">
+          <Avatar.Collaborator
+            role={activity.responsible.role}
+            size="small"
+            label={activity.responsible.name}
+          />
+        </div>
       </Card>
       <Modal.Confirm
         message={`Deseja realmente remover a atividade ${activity.title}`}

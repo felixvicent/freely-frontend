@@ -1,9 +1,8 @@
-import { Avatar, Button, Dropdown, Layout, Menu } from 'antd';
+import { Button, Dropdown, Layout, Menu } from 'antd';
 import { useState } from 'react';
 import {
   AiOutlineMenuUnfold,
   AiOutlineMenuFold,
-  AiOutlineUser,
   AiOutlineProject,
   AiOutlineSetting,
 } from 'react-icons/ai';
@@ -13,11 +12,12 @@ import { FiHome, FiUsers } from 'react-icons/fi';
 import { Outlet, useNavigate, useLocation, Link } from 'react-router-dom';
 
 import { useAuth } from '../../app/hooks/useAuth';
+import { Avatar } from '../components/Avatar';
 
 export function AppLayout() {
   const [collapsed, setCollapsed] = useState(false);
 
-  const { signout } = useAuth();
+  const { signout, user } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -107,9 +107,7 @@ export function AppLayout() {
               ],
             }}
           >
-            <Avatar className="cursor-pointer">
-              <AiOutlineUser />
-            </Avatar>
+            <Avatar.Collaborator label={user.name} tooltip={false} />
           </Dropdown>
         </Layout.Header>
         <Layout.Content className="h-full p-6">
