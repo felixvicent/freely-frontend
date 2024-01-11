@@ -5,7 +5,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { AiOutlineMore } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-import { ActivityStatus } from '../../../app/entities/AcitivtyStatus';
+import { ActivityStatus } from '../../../app/entities/ActivityStatus';
 import { ProjectStatus } from '../../../app/entities/ProjectStatus';
 import { formatCurrency } from '../../../app/utils/format/formatCurrency';
 import { getProjectLabelByStatus } from '../../../app/utils/labels/getProjectLabelByStatus';

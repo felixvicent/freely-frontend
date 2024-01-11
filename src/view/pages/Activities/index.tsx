@@ -2,7 +2,7 @@ import { Col, Row } from 'antd';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import { ActivityStatus } from '../../../app/entities/AcitivtyStatus';
+import { ActivityStatus } from '../../../app/entities/ActivityStatus';
 import { Drop } from '../../components/Drop';
 
 import { useActivities } from './useActivities';

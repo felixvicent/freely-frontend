@@ -2,7 +2,7 @@ import { Button, Card, Col, Row, Tooltip, Typography } from 'antd';
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ActivityStatus } from '../../../app/entities/AcitivtyStatus';
+import { ActivityStatus } from '../../../app/entities/ActivityStatus';
 import { formatCurrency } from '../../../app/utils/format/formatCurrency';
 import { Chart } from '../../components/Chart';
 import { Container } from '../../components/Container';

@@ -1,8 +1,8 @@
 import { Card, List } from 'antd';
 import { CSSProperties } from 'react';
 
-import { ActivityStatus } from '../../../../app/entities/AcitivtyStatus';
 import { Activity } from '../../../../app/entities/Activity';
+import { ActivityStatus } from '../../../../app/entities/ActivityStatus';
 import { Draggable } from '../../Draggable';
 
 import { useActivitiesDrop } from './useActivitiesDrop';

@@ -3,8 +3,8 @@ import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { ActivityStatus } from '../../../app/entities/AcitivtyStatus';
 import { Activity } from '../../../app/entities/Activity';
+import { ActivityStatus } from '../../../app/entities/ActivityStatus';
 import { ProjectStatus } from '../../../app/entities/ProjectStatus';
 import { useFetchDeleteActivity } from '../../../app/hooks/api/activities/useFetchDeleteActivity';
 import { useFetchDoneActivities } from '../../../app/hooks/api/activities/useFetchDoneActivities';

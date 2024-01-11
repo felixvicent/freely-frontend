@@ -3,7 +3,7 @@ import { IoMdTime } from 'react-icons/io';
 import { MdCheck, MdPendingActions } from 'react-icons/md';
 import { TbProgress } from 'react-icons/tb';
 
-import { ActivityStatus } from '../../../../app/entities/AcitivtyStatus';
+import { ActivityStatus } from '../../../../app/entities/ActivityStatus';
 import { getActivityLabelByStatus } from '../../../../app/utils/labels/getActivityLabelByStatus';
 
 interface ActivityItemProps {

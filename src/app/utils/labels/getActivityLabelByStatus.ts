@@ -1,4 +1,4 @@
-import { ActivityStatus } from '../../entities/AcitivtyStatus';
+import { ActivityStatus } from '../../entities/ActivityStatus';
 
 export function getActivityLabelByStatus(status: ActivityStatus) {
   switch (status) {

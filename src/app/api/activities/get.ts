@@ -1,5 +1,5 @@
-import { ActivityStatus } from '../../entities/AcitivtyStatus';
 import { Activity } from '../../entities/Activity';
+import { ActivityStatus } from '../../entities/ActivityStatus';
 import { apiException, httpClient } from '../../services/httpClient';
 
 interface FetchActivitiesPayload {

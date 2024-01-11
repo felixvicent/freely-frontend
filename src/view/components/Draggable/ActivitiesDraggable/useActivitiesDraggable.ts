@@ -1,13 +1,15 @@
+import { useState } from 'react';
 import { useDrag } from 'react-dnd';
 import toast from 'react-hot-toast';
 import { useQueryClient } from 'react-query';
 
-import { ActivityStatus } from '../../../../app/entities/AcitivtyStatus';
 import { Activity } from '../../../../app/entities/Activity';
+import { ActivityStatus } from '../../../../app/entities/ActivityStatus';
 import { Project } from '../../../../app/entities/Project';
 import { useFetchDeleteActivity } from '../../../../app/hooks/api/activities/useFetchDeleteActivity';
 import { useFetchUpdateActivity } from '../../../../app/hooks/api/activities/useFetchUpdateActivities';
 import { apiException } from '../../../../app/services/httpClient';
+import { getQueryToInvalidate } from '../../../../app/utils/activities/getQueryToInvalidate';
 
 interface IDropResult {
   status: ActivityStatus;
@@ -15,6 +17,25 @@ interface IDropResult {
 }
 
 export function useActivitiesDraggable(activity: Activity) {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isModalActivityOpen, setIsModalActivityOpen] = useState(false);
+
+  function handleOpenModal() {
+    setIsModalActivityOpen(true);
+  }
+
+  function handleCloseModal() {
+    setIsModalActivityOpen(false);
+  }
+
+  function handleOpenDeleteModal() {
+    setIsDeleteModalOpen(true);
+  }
+
+  function handleCloseDeleteModal() {
+    setIsDeleteModalOpen(false);
+  }
+
   const { mutateAsync: updateActivity } = useFetchUpdateActivity();
   const { mutateAsync: deleteActivity, isLoading } = useFetchDeleteActivity();
 
@@ -22,21 +43,6 @@ export function useActivitiesDraggable(activity: Activity) {
 
   async function handleDeleteActivity(activityId: string) {
     await deleteActivity({ path: { id: activityId } });
-  }
-
-  function getQueryToInvalidate(status: ActivityStatus) {
-    switch (status) {
-      case ActivityStatus.PENDING:
-        return 'pending-activities';
-      case ActivityStatus.DONE:
-        return 'done-activities';
-      case ActivityStatus.PROGRESS:
-        return 'progress-activities';
-      case ActivityStatus.WAITING:
-        return 'waiting-activities';
-      default:
-        return '';
-    }
   }
 
   const [_, drag] = useDrag(
@@ -88,5 +94,15 @@ export function useActivitiesDraggable(activity: Activity) {
     [activity],
   );
 
-  return { drag, handleDeleteActivity, isLoading };
+  return {
+    drag,
+    handleDeleteActivity,
+    isLoading,
+    handleOpenModal,
+    handleCloseModal,
+    isDeleteModalOpen,
+    isModalActivityOpen,
+    handleOpenDeleteModal,
+    handleCloseDeleteModal,
+  };
 }

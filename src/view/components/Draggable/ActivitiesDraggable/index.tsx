@@ -1,12 +1,13 @@
 import { Button, Card } from 'antd';
 import dayjs from 'dayjs';
-import { useState } from 'react';
 import { BsTrash } from 'react-icons/bs';
 import { useLocation } from 'react-router-dom';
 
-import { ActivityStatus } from '../../../../app/entities/AcitivtyStatus';
 import { Activity } from '../../../../app/entities/Activity';
+import { ActivityStatus } from '../../../../app/entities/ActivityStatus';
 import { getRemainigDate } from '../../../../app/utils/date/getRemainingDate';
+import { isInAlert } from '../../../../app/utils/date/isInAlert';
+import { isInDanger } from '../../../../app/utils/date/isInDanger';
 import { Modal } from '../../Modal';
 
 import { useActivitiesDraggable } from './useActivitiesDraggable';
@@ -16,12 +17,19 @@ interface ActivitiesDraggableProps {
 }
 
 export function ActivitiesDraggable({ activity }: ActivitiesDraggableProps) {
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
   const location = useLocation();
 
-  const { drag, handleDeleteActivity, isLoading } =
-    useActivitiesDraggable(activity);
+  const {
+    drag,
+    handleDeleteActivity,
+    isLoading,
+    handleCloseDeleteModal,
+    handleCloseModal,
+    handleOpenDeleteModal,
+    handleOpenModal,
+    isDeleteModalOpen,
+    isModalActivityOpen,
+  } = useActivitiesDraggable(activity);
 
   const title =
     location.pathname.split('/')[1] === 'activities'
@@ -34,12 +42,9 @@ export function ActivitiesDraggable({ activity }: ActivitiesDraggableProps) {
         size="small"
         ref={drag}
         title={title}
+        onClick={handleOpenModal}
         extra={
-          <Button
-            className="p-0"
-            type="link"
-            onClick={() => setIsDeleteModalOpen(true)}
-          >
+          <Button className="p-0" type="link" onClick={handleOpenDeleteModal}>
             <BsTrash color="#f00" />
           </Button>
         }
@@ -47,14 +52,11 @@ export function ActivitiesDraggable({ activity }: ActivitiesDraggableProps) {
         <span
           className={`flex items-center justify-between text-xs ${
             activity.status !== ActivityStatus.DONE &&
-            dayjs(activity.estimatedDate)
-              .subtract(3, 'days')
-              .isBefore(dayjs()) &&
-            'text-yellow-500'
-          } ${
-            activity.status !== ActivityStatus.DONE &&
-            dayjs(activity.estimatedDate).isBefore(dayjs()) &&
-            'text-red-500'
+            isInDanger(activity.estimatedDate)
+              ? 'text-red-500'
+              : activity.status !== ActivityStatus.DONE &&
+                isInAlert(activity.estimatedDate) &&
+                'text-yellow-500'
           }`}
         >
           {activity.status !== ActivityStatus.DONE &&
@@ -74,9 +76,14 @@ export function ActivitiesDraggable({ activity }: ActivitiesDraggableProps) {
         message={`Deseja realmente remover a atividade ${activity.title}`}
         isLoading={isLoading}
         isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
+        onClose={handleCloseDeleteModal}
         onSubmit={() => handleDeleteActivity(activity.id)}
         title="Remover atividade"
+      />
+      <Modal.ActivityDetails
+        activityId={activity.id}
+        onClose={handleCloseModal}
+        open={isModalActivityOpen}
       />
     </>
   );

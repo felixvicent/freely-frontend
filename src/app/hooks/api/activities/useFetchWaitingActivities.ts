@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query';
 
 import { fetchActivities } from '../../../api/activities/get';
-import { ActivityStatus } from '../../../entities/AcitivtyStatus';
+import { ActivityStatus } from '../../../entities/ActivityStatus';
 
 export function useFetchWaitingActivities(projectId?: string) {
   const { data, isFetching } = useQuery({

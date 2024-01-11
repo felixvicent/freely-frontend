@@ -6,7 +6,7 @@ export function getRemainigDate(date: string) {
 
   const monthDiff = targetDate.diff(currentDate, 'month');
 
-  if (monthDiff > 0) return `${monthDiff} mese${monthDiff > 1 ? 's' : ''}`;
+  if (monthDiff > 0) return `${monthDiff} mes${monthDiff > 1 ? 'es' : ''}`;
 
   const weekDiff = targetDate.diff(currentDate, 'week');
 

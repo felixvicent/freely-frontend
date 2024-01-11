@@ -1,7 +1,7 @@
 import { ArcElement, Chart, Legend, Tooltip } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 
-import { ActivityStatus } from '../../../../app/entities/AcitivtyStatus';
+import { ActivityStatus } from '../../../../app/entities/ActivityStatus';
 import { getActivityLabelByStatus } from '../../../../app/utils/labels/getActivityLabelByStatus';
 
 Chart.register(ArcElement, Tooltip, Legend);

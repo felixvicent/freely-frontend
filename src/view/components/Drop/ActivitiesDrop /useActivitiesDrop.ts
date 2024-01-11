@@ -1,6 +1,6 @@
 import { useDrop } from 'react-dnd';
 
-import { ActivityStatus } from '../../../../app/entities/AcitivtyStatus';
+import { ActivityStatus } from '../../../../app/entities/ActivityStatus';
 
 export function useActivitiesDrop(status: ActivityStatus) {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
