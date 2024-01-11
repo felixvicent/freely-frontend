@@ -1,12 +1,8 @@
-import { Card, Col, Modal, Row, Select } from 'antd';
-import dayjs from 'dayjs';
+import { Col, Modal, Row } from 'antd';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-import { ActivityStatus } from '../../../../app/entities/ActivityStatus';
-import { getRemainigDate } from '../../../../app/utils/date/getRemainingDate';
-import { getActivityLabelByStatus } from '../../../../app/utils/labels/getActivityLabelByStatus';
-
+import { Details } from './Details';
 import { useActivityDetailsModal } from './useActivityDetailsModal';
 
 interface ActivityDetailsModalProps {
@@ -20,14 +16,7 @@ export function ActivityDetailsModal({
   onClose,
   open,
 }: ActivityDetailsModalProps) {
-  const { activity, handleChangeStatus, isLoading } = useActivityDetailsModal(
-    activityId,
-    open,
-  );
-
-  console.log(activity?.estimatedDate);
-  console.log(dayjs());
-  console.log(dayjs(activity?.estimatedDate).isBefore(dayjs()));
+  const { activity } = useActivityDetailsModal(activityId, open);
 
   return (
     <Modal
@@ -49,37 +38,7 @@ export function ActivityDetailsModal({
       <Row gutter={16}>
         <Col span={16} />
         <Col span={8}>
-          <Card>
-            <div className="flex flex-col gap-2">
-              <div>
-                <h4>Status</h4>
-                <Select
-                  loading={isLoading}
-                  className="w-60"
-                  rootClassName="[&>div]:!pl-0"
-                  value={activity?.status}
-                  bordered={false}
-                  options={Object.values(ActivityStatus).map((status) => ({
-                    label: getActivityLabelByStatus(status),
-                    value: status,
-                  }))}
-                  onChange={(value: ActivityStatus) =>
-                    handleChangeStatus(value)
-                  }
-                />
-              </div>
-              <div>
-                <h4>Data estimada de termino</h4>
-                <span>
-                  {dayjs(activity?.estimatedDate).format('DD/MM/YYYY')}{' '}
-                  <span className="text-xs">
-                    {activity?.status !== ActivityStatus.DONE &&
-                      `(${getRemainigDate(activity?.estimatedDate ?? '')})`}
-                  </span>
-                </span>
-              </div>
-            </div>
-          </Card>
+          <Details activityId={activityId} isOpen={open} />
         </Col>
       </Row>
     </Modal>

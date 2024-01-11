@@ -1,5 +1,6 @@
-import { useMutation } from "react-query";
-import { fetchUpdateActivity } from "../../../api/activities/{id}/put";
+import { useMutation } from 'react-query';
+
+import { fetchUpdateActivity } from '../../../api/activities/{id}/put';
 
 export function useFetchUpdateActivity() {
   const { data, mutateAsync, isLoading } = useMutation({

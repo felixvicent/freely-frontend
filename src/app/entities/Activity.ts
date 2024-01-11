@@ -1,5 +1,6 @@
 import { ActivityStatus } from './ActivityStatus';
 import { Project } from './Project';
+import { User } from './User';
 
 export type Activity = {
   id: string;
@@ -9,4 +10,5 @@ export type Activity = {
   project: Project;
   estimatedDate: string;
   finishedAt: string;
+  responsible: User;
 };
