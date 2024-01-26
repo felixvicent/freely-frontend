@@ -11,4 +11,5 @@ export type Activity = {
   estimatedDate: string;
   finishedAt: string;
   responsible: User;
+  description: string;
 };

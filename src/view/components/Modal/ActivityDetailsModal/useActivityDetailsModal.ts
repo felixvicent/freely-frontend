@@ -13,7 +13,7 @@ export function useActivityDetailsModal(activityId: string, isOpen: boolean) {
   const {
     activity,
     isFetching: isActivityLoading,
-    refetch: refetchUpdateActivity,
+    refetch: refetchActivity,
   } = useFetchActivityDetails(activityId);
   const { isLoading: isUpdateActivityStatusLoading, mutateAsync } =
     useFetchUpdateActivity();
@@ -52,7 +52,7 @@ export function useActivityDetailsModal(activityId: string, isOpen: boolean) {
           ),
         ],
       });
-      queryClient.invalidateQueries(['activity-details']);
+      queryClient.invalidateQueries(['activity-details', activityId]);
     } catch (error) {
       toast.error(apiException(error).message);
     }
@@ -84,9 +84,9 @@ export function useActivityDetailsModal(activityId: string, isOpen: boolean) {
 
   useEffect(() => {
     if (isOpen) {
-      refetchUpdateActivity();
+      refetchActivity();
     }
-  }, [refetchUpdateActivity, isOpen]);
+  }, [refetchActivity, isOpen, activityId]);
 
   return {
     activity,

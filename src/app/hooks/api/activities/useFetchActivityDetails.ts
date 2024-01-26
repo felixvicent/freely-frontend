@@ -4,7 +4,7 @@ import { fetchActivityDetails } from '../../../api/activities/{id}/get';
 
 export function useFetchActivityDetails(activityId: string) {
   const { data, isFetching, refetch } = useQuery({
-    queryKey: ['activity-details'],
+    queryKey: ['activity-details', activityId],
     queryFn: () => fetchActivityDetails({ activityId }),
   });
 
