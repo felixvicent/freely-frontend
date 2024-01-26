@@ -5,9 +5,10 @@ import { useState } from 'react';
 
 interface useEditorProps {
   initialContent: string;
+  placeholder?: string;
 }
 
-export function useEditor({ initialContent }: useEditorProps) {
+export function useEditor({ initialContent, placeholder }: useEditorProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   const editor = useEditorTipTap({
@@ -15,7 +16,7 @@ export function useEditor({ initialContent }: useEditorProps) {
       StarterKit,
       Placeholder.configure({
         includeChildren: true,
-        placeholder: 'Nenhuma descrição',
+        placeholder: placeholder ?? '',
       }),
     ],
     content: initialContent,

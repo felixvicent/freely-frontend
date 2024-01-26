@@ -5,17 +5,21 @@ import { useEditor } from './useEditor';
 
 interface EditorProps {
   initialContent?: string;
+  placeholder?: string;
   showActions?: boolean;
   onFinish: (newValue?: string) => Promise<void>;
+  isLoading?: boolean;
 }
 
 export function Editor({
   initialContent = '',
   showActions = true,
   onFinish,
+  placeholder,
+  isLoading = false,
 }: EditorProps) {
   const { editor, isEditing, handleStartEditing, handleStopEditing } =
-    useEditor({ initialContent });
+    useEditor({ initialContent, placeholder });
 
   return (
     <div>
@@ -29,6 +33,7 @@ export function Editor({
           <Button
             onClick={() => {
               onFinish(editor?.getHTML());
+              editor?.commands.clearContent();
               handleStopEditing();
             }}
             size="small"
@@ -36,7 +41,15 @@ export function Editor({
           >
             Salvar
           </Button>
-          <Button onClick={handleStopEditing} size="small">
+          <Button
+            loading={isLoading}
+            disabled={isLoading}
+            onClick={() => {
+              handleStopEditing();
+              editor?.commands.clearContent();
+            }}
+            size="small"
+          >
             Cancelar
           </Button>
         </div>
