@@ -14,7 +14,7 @@ export async function fetchUpdateActivityResponsible({
   body,
 }: FetchUpdateActivityResponsiblePayload) {
   return httpClient.put<void>(
-    `/activities/${path.activityId}/responsible/${body.responsibleId}`,
+    `/activities/${path.activityId}/responsible`,
     body,
   );
 }
