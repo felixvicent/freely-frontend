@@ -73,11 +73,13 @@ export function ActivitiesDraggable({ activity }: ActivitiesDraggableProps) {
           </span>
         </span>
         <div className="flex justify-end mt-2">
-          <Avatar.Collaborator
-            role={activity.responsible?.role}
-            size="small"
-            label={activity.responsible?.name}
-          />
+          {activity.responsible && (
+            <Avatar.Collaborator
+              role={activity.responsible?.role}
+              size="small"
+              label={activity.responsible?.name}
+            />
+          )}
         </div>
       </Card>
       <Modal.Confirm
