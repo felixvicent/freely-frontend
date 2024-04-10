@@ -3,9 +3,10 @@ import { Tabs, TabsProps } from 'antd';
 import { useAuth } from '../../../../../app/hooks/useAuth';
 
 import { Collaborators } from './Collaborators';
+import { Integrations } from './Integrations';
 import { Profile } from './Profile';
 
-const ADMIN_ROUTES = ['collaborators'];
+const ADMIN_ROUTES = ['collaborators', 'integrations'];
 
 export function SettingsTabs() {
   const { hasAuthority } = useAuth();
@@ -20,6 +21,11 @@ export function SettingsTabs() {
       key: 'collaborators',
       label: 'Colaboradores',
       children: <Collaborators />,
+    },
+    {
+      key: 'integrations',
+      label: 'Integrations',
+      children: <Integrations />,
     },
   ];
 

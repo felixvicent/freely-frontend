@@ -7,7 +7,7 @@ export interface ApiDefaultErrorResponse {
 }
 
 // eslint-disable-next-line prettier/prettier
-export interface ApiErrorResponse extends AxiosError<ApiDefaultErrorResponse> { }
+export interface ApiErrorResponse extends AxiosError<ApiDefaultErrorResponse> {}
 
 export const httpClient = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
