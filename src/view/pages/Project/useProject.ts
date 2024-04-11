@@ -13,6 +13,7 @@ import { useFetchProgressActivities } from '../../../app/hooks/api/activities/us
 import { useFetchUpdateActivity } from '../../../app/hooks/api/activities/useFetchUpdateActivities';
 import { useFetchWaitingActivities } from '../../../app/hooks/api/activities/useFetchWaitingActivities';
 import { useFetchListAllCollaborators } from '../../../app/hooks/api/collaborators/useFetchListAllCollaborators';
+import { useFetchCreatePayment } from '../../../app/hooks/api/payments/useFetchCreatePayment';
 import { useFetchDeleteProject } from '../../../app/hooks/api/projects/useFetchDeleteProject';
 import { useFetchProjectDetails } from '../../../app/hooks/api/projects/useFetchProjectDetails';
 import { useFetchUpdateProjectStatus } from '../../../app/hooks/api/projects/useFetchUpdateProjectStatus';
@@ -64,6 +65,8 @@ export function useProject() {
   const { isLoading: isUpdateActivityLoading, mutateAsync: updateActivity } =
     useFetchUpdateActivity();
 
+  const { mutateAsync: createPayment } = useFetchCreatePayment();
+
   const {
     isLoading: isUpdateProjectStatusLoading,
     mutateAsync: updateProjectStatus,
@@ -99,6 +102,14 @@ export function useProject() {
 
   function handleCloseDeleteActivityModal() {
     setSelectedActivityToDelete(undefined);
+  }
+
+  async function handleCreatePayment() {
+    try {
+      await createPayment({ path: { projectId: projectId ?? '' } });
+    } catch (error) {
+      toast.error(apiException(error).message);
+    }
   }
 
   function handleChangeCollaboratorsFilter(colaboratorId: string) {
@@ -212,5 +223,6 @@ export function useProject() {
     collaborators,
     selectedCollaborators,
     handleChangeCollaboratorsFilter,
+    handleCreatePayment,
   };
 }

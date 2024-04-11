@@ -52,6 +52,7 @@ export function Project() {
     collaborators,
     selectedCollaborators,
     handleChangeCollaboratorsFilter,
+    handleCreatePayment,
   } = useProject();
 
   const items: MenuProps['items'] = [
@@ -86,6 +87,7 @@ export function Project() {
                 handleUpdateProjectStatus(value)
               }
             />
+            <Button onClick={handleCreatePayment}>Gerar cobrança</Button>
 
             <Dropdown menu={{ items }} trigger={['click']}>
               <Button type="link">

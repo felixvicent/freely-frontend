@@ -24,7 +24,7 @@ export function SettingsTabs() {
     },
     {
       key: 'integrations',
-      label: 'Integrations',
+      label: 'Integrações',
       children: <Integrations />,
     },
   ];
